@@ -1,0 +1,13 @@
+@import url(https://fonts.bunny.net/css?family=dm-serif-display:400);
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, *, ul, li, a {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Karla', sans-serif;
+}
