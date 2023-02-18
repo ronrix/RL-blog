@@ -6,7 +6,7 @@ type Props = {
 
 export default function Button({ children }: Props) {
   return (
-    <button className="py-2 px-4 border rounded-full bg-green-600 text-white uppercase hover:bg-green-500">
+    <button className="py-2 px-4 border rounded-full bg-green-600 text-white uppercase hover:bg-green-500 text-xs md:text-base">
         {children}
     </button>
   )
