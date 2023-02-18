@@ -3,17 +3,12 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import './index.css'
 import Blog from './pages/Blog';
-import Login from './pages/Login';
 import Search from './pages/Search';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to="/login" />
-  },
-  {
-    path: "/login",
-    element: <Login />
+    element: <h1>This is home</h1> 
   },
   {
     path: "/search",
