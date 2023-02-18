@@ -20,7 +20,7 @@ export default function Logo({ color }: Props) {
                     </g>
                 </g>
             </svg>
-           <svg height="60" width="200">
+           <svg height="60" width="50" className={`${color === 'white' ? 'block' : 'hidden'} md:block`}>
                 <text x="10" y="35" fill={`${color}`} className="font-['labrada'] align-middle" fontSize={24} >RL</text>
             </svg> 
         </Link>

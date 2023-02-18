@@ -56,3 +56,28 @@ img {
     width: 100%;
     margin: 1em 0;
 }
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2em;        
+    }
+    h2 {
+        font-size: 1.5em;        
+    }
+    p {
+        font-size: 1em;        
+    }
+}
+
+
+@media (min-width: 1024px) {
+    h1 {
+        font-size: 3em;        
+    }
+    h2 {
+        font-size: 2em;        
+    }
+    p {
+        font-size: 1.5em;        
+    }
+}

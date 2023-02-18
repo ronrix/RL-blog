@@ -37,7 +37,7 @@ export default function Blog() {
         <Header />
 
         <div className="container mx-auto flex">
-          <div className="flex-1 p-20  border border-r-gray-200 border-t-transparent border-l-transparent border-b-transparent ">
+          <div className="flex-1 p-5 md:p-20  border border-r-gray-200 border-t-transparent border-l-transparent border-b-transparent ">
             <BlogHeader />
             <BlogContent />
             <BlogFooter footerRef={footerRef} />
