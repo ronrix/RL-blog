@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function UserBlogCard() {
+export default function BlogHeader() {
   return (
     <div className="flex items-center justify-between mb-10">
         {/* user avatar */}
@@ -13,10 +13,12 @@ export default function UserBlogCard() {
             <p className="text-lg text-gray-700">Feb 8 . 3 min read </p>
         </div>
         {/* links */}
-        <div className='flex items-center flex-wrap justify-start'>
+        <div className='flex items-center flex-wrap justify-between w-[20%]'>
            <i className="fa-brands fa-twitter text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
-           <i className="fa-brands fa-facebook text-2xl text-gray-500 hover:text-black cursor-pointer mx-5"></i> 
+           <i className="fa-brands fa-facebook text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
            <i className="fa-brands fa-linkedin text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
+           <i className="fa-solid fa-link text-gray-500 text-2xl hover:text-black cursor-pointer"></i>
+           <i className="fa-regular fa-bookmark text-2xl text-gray-500 hover:text-black cursor-pointer"></i>
         </div>
     </div>
   )

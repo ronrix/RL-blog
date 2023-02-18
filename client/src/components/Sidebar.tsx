@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Sidebar() {
   return (
-    <div className="border border-l-gray-200 border-t-transparent border-r-transparent border-b-transparent w-[500px]">Sidebar</div>
+    <div className="sticky top-0 w-[300px] xl:w-[500px] min-h-[100px] h-[100px] p-5 hidden lg:block">Sidebar</div>
   )
 }

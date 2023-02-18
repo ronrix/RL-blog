@@ -1,0 +1,58 @@
+h1 {
+    font-size: 3em;
+}
+h2 {
+    font-size: 2em;
+    margin-top: 0.5em;
+    font-weight: 700;
+}
+h3 {
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+h4 {
+    font-size: 0.95em;
+    margin-top: 0.5em;
+}
+h5 {
+    font-size: 0.85em;
+    margin-top: 0.5em;
+}
+h6 {
+    font-size: 0.75em;
+    margin-top: 0.5em;
+}
+
+a {
+    color: blue;
+    font-family: 'Labrada', sans-serif;
+}
+
+hr {
+    margin-bottom: 2em;
+}
+
+p {
+    font-size: 1.5em;
+    font-family: 'Labrada', sans-serif;
+}
+
+ol, ul, li {
+    list-style: auto;
+    padding: 0 1em;
+    font-family: 'Labrada', sans-serif;
+    margin-top: 0.5em;
+}
+
+li {
+    font-size: 1.2em;
+    line-height: 2em;
+}
+strong {
+    font-size: 1em;
+}
+
+img {
+    width: 100%;
+    margin: 1em 0;
+}
