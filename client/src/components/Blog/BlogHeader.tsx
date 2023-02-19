@@ -1,4 +1,5 @@
 import React from 'react'
+import Abbr from '../Abbr'
 
 export default function BlogHeader() {
   return (
@@ -25,7 +26,10 @@ export default function BlogHeader() {
            <i className="fa-brands fa-twitter text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
            <i className="fa-brands fa-facebook text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
            <i className="fa-brands fa-linkedin text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
-           <i className="fa-solid fa-link text-gray-500 text-lg sm:text-2xl hover:text-black cursor-pointer"></i>
+           <div className='relative group'>
+            <i className="fa-solid fa-link text-gray-500 text-lg sm:text-2xl group-hover:text-black cursor-pointer"></i>
+            <Abbr text="Copy" />
+           </div>
            <i className="fa-regular fa-bookmark text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer hidden sm:block"></i>
         </div>
     </div>
