@@ -4,7 +4,7 @@ import Logo from './Logo'
 
 export default function Footer() {
   return (
-    <div className="bg-black p-5 relative">
+    <div className="bg-black p-5 relative block lg:hidden">
         <div className="flex">
             <Logo color="white" />
         </div>
