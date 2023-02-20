@@ -11,12 +11,14 @@ export default new GraphQLObjectType({
         username: { type: GraphQLNonNull(GraphQLString) },
         email: { type: GraphQLNonNull(GraphQLString) },
         password: { type: GraphQLNonNull(GraphQLString) },
+        description: { type: GraphQLNonNull(GraphQLString) }
       },
       resolve(parent, args) {
         const user = new User({
           username: args.username,
           email: args.email,
           password: args.password,
+          description: args.description
         });
         return user.save();
       }
