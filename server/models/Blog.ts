@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { CategorySchema } from "./Category";
-import { UserSchema } from "./User";
 
 export const BlogSchema = new mongoose.Schema({
   user_id: mongoose.Schema.Types.ObjectId,
