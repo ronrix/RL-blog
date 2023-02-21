@@ -1,23 +1,19 @@
-import { GraphQLID, GraphQLObjectType, GraphQLString } from "graphql";
+import { ObjectId } from "mongoose";
 
+export type BlogType = {
+  user_id: ObjectId;
+  content: String;
+  category: String;
+  read_duration: String;
+}
 
-export const UserType = new GraphQLObjectType({
-  name: "User",
-  fields: () => ({
-    id: { type: GraphQLID },
-    username: { type: GraphQLString },
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
-    description: { type: GraphQLString },
-  })
-});
-
-export const BlogType = new GraphQLObjectType({
-  name: "Blog",
-  fields: () => ({
-    user_id: { type: GraphQLID },
-    content: { type: GraphQLString },
-    category: { type: GraphQLString },
-    read_duration: { type: GraphQLString },
-  })
-});
+export type UserType = {
+  id: ObjectId;
+  username: String;
+  email: String;
+  password: String,
+  description: String;
+  followers: [String];
+  links: [String];
+  bookmarks: [String];
+}

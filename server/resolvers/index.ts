@@ -1,12 +1,54 @@
-import authMiddleware from "../middleware/auth.middleware";
+import { GraphQLError } from "graphql";
+import Blog from "../models/Blog";
+import User from "../models/User";
+import { BlogType, UserType } from "../types";
 
 export default {
   Query: {
-    hello: authMiddleware((parents: any, args: any, context: any, info: any) => {
+    hello: (parents: any, args: any, context: any, info: any) => {
       return 'Hello world!';
-    }),
+    },
     world: () => {
       return "Work!!"
+    },
+    user: (parents: any, args: any, context: any, info: any) => {
+      return User.findById(args.id);
     }
   },
+  Mutation: {
+    addUser: async (parent: any, args: UserType, context: any, info: any) => {
+      try {
+        const user = new User(args); 
+        await user.save();
+        return { id: 1, username: user.username, email: user.email, description: user.description };
+      } catch(err: any) {
+        if(err.code === 11000) {
+          return new GraphQLError('Invalid, user already exists', {
+            extensions: {
+              code: 'DUPLICATE_USER',
+            },
+          });
+        }
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+
+    createBlog: async (parent: any, args: BlogType, context: any, info: any) => {
+      try {
+        const blog = new Blog(args);
+        await blog.save();
+        return { user_id: args.user_id, content: args.content, category: args.category, read_duration: args.read_duration };
+      } catch(err: any) {
+        return new GraphQLError("Something went wrong!", {
+          extensions: {
+            code: "INTERNAL_SERVER_ERROR"
+          }
+        })
+      }
+    }
+  }
 };
