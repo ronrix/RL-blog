@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 
 export const UserSchema = new mongoose.Schema({
-  username: String,
-  email: String,
+  username: {
+    type: String,
+    unique: true, 
+  },
+  email: {
+    type: String, 
+    unique: true,
+  },
   description: String,
   followers: {
     type: [],
@@ -17,6 +23,8 @@ export const UserSchema = new mongoose.Schema({
     default: []
   },
   password: String,
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
 });
 
 export default mongoose.model("User", UserSchema);
