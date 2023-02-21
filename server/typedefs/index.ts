@@ -24,10 +24,17 @@ export default `#graphql
     updatedAt: GraphQLDateTime
   }
 
+  type Response {
+    msg: String!
+    status: Int!
+  }
+
   type Query {
     hello: String
     world: String
     user(id: ID!): UserType
+    login(username: String!, email: String!, uid: String!): UserType
+    logout(id: ID!): Response
   }
 
   type Mutation {

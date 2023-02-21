@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 import Blog from "../models/Blog";
 import User from "../models/User";
 import { BlogType, UserType } from "../types";
+import jwt from "jsonwebtoken";
 
 export default {
   Query: {
@@ -13,6 +14,42 @@ export default {
     },
     user: (parents: any, args: any, context: any, info: any) => {
       return User.findById(args.id);
+    },
+    login: async (parents: any, args: any, context: any, info: any) => {
+      try {
+        const user: any = await User.findOne({ username: args.username, email: args.email, password: args.uid });
+        if(!user) {
+          return new GraphQLError("User not found", {
+            extensions: {
+              code: 'USER_NOT_FOUND',
+            },
+          });
+        }
+        // create a token with the user
+        const token = await jwt.sign({id: user.id, usernmae: user.username, email: user.email}, process.env.SECRET_KEY, { expiresIn: "10h" });
+        context.res.cookie("token", token);
+
+        return user;
+      } catch(err) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+    logout: (parents: any, args: any, context: any, info: any) => {
+      // TODO: remove cookie token
+      try {
+        context.res.clearCookie("token");
+        return { msg: "Successfully logout", status: 200 };
+      } catch(err) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {
