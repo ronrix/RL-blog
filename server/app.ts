@@ -16,6 +16,8 @@ import resolvers from "./resolvers";
 import { shield, rule } from 'graphql-shield';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
+import jwt from 'jsonwebtoken';
+
 dotenv.config();
 interface MyContext {
   token?: String;
@@ -28,17 +30,26 @@ const main = async () => {
   // connect to database
   connectDB();
 
-  const httpServer = http.createServer(app);
+  app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+  app.use(cookieParser());
 
+  const httpServer = http.createServer(app);
   const schema = makeExecutableSchema({ typeDefs, resolvers });
 
   const isAuthenticated = rule()(async (parent: any, args: any, ctx: any, info: any) => {
-    return false;
+    const valid = await jwt.verify(ctx.token, process.env.SECRET_KEY);
+    if(!valid) { 
+      return false;
+    }
+    return true;
   });
   const permissions = shield({
     Query: {
       hello: isAuthenticated,
     },
+    Mutation: {
+      createBlog: isAuthenticated,
+    }
   });
   const permissionSchema = applyMiddleware(schema, permissions);
   const server = new ApolloServer<MyContext>({
@@ -47,13 +58,11 @@ const main = async () => {
   });
   await server.start();
 
-  app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
-  app.use(cookieParser());
   app.use(
     '/graphql',
     json(),
     expressMiddleware(server, {
-      context: async ({ req }) => ({ token: req.cookies['token'] }),
+      context: async ({ req, res }) => ({ token: req.cookies['token'], res }),
     }),
   );
   
