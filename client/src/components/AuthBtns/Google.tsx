@@ -1,5 +1,34 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import React from "react";
+import React, { createElement } from "react";
+import { useLazyQuery, gql, useMutation } from '@apollo/client';
+import jwtDecode from "jwt-decode";
+
+const LOGIN = gql`
+  query Query($username: String!, $email: String!, $uid: String!) {
+    login(username: $username, email: $email, uid: $uid) {
+      id
+      username
+      email
+      description
+      followers
+      links
+      bookmarks
+    }
+  }
+`;
+
+const ADD_USER = gql`
+  mutation($username: String!, $email: String!, $password: String!, $description: String!) {
+    addUser(username: $username, email: $email, password: $password, description: $description) {
+      id
+      email
+      username
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`
 
 type Props = {
   mode: { signup: Boolean; signin: Boolean };
@@ -7,8 +36,28 @@ type Props = {
 
 export default function Google({ mode }: Props) {
   const login = useGoogleLogin({
-    onSuccess: (credential) => console.log(credential),
+    onSuccess: async (credential) => {
+      const headers = new Headers({
+        Authorization: `Bearer ${credential.access_token}`,
+        'Content-Type': 'application/json',
+      });
+      const url = 'https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses';
+      const response = await fetch(url, {method: "GET", headers});
+      const { emailAddresses, names }= await response.json();
+
+      console.log(emailAddresses, names);
+    
+      // add the user
+      if(mode.signup) {
+        addUser({variables: { username: names[0].displayName, email: emailAddresses[0].value, password: credential.access_token, description: "This is sample description" }});
+        return;
+      }
+      // login the user
+      getUser({ variables: { username: names[0].displayName, email: credential.access_token, uid: names[0].metadata.source.id }});
+    },
   });
+  const [getUser, { loading, error, data }] = useLazyQuery(LOGIN);
+  const [addUser, { loading: ld, error: er, data: dt }] = useMutation(ADD_USER);
 
   return (
     <button
