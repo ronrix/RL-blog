@@ -6,6 +6,10 @@ import Blog from './pages/Blog';
 import Search from './pages/Search';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
+// state
+import store from "./state/store"
+import { Provider } from 'react-redux';
+
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
   cache: new InMemoryCache(),
@@ -28,8 +32,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <RouterProvider router={router} />
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <RouterProvider router={router} />
+      </ApolloProvider>
+    </Provider>
   </React.StrictMode>,
 )
