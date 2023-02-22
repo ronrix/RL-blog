@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import disableScroll from "disable-scroll";
-import { GoogleLogin, GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Google from "./AuthBtns/Google";
 import Facebook from "./AuthBtns/Facebook";
 
