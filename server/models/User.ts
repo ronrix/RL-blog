@@ -9,6 +9,9 @@ export const UserSchema = new mongoose.Schema({
     type: String, 
     unique: true,
   },
+  avatar: {
+    type: String,
+  },
   description: String,
   followers: {
     type: [],
