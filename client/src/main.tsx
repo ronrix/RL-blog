@@ -9,10 +9,12 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 // state
 import store from "./state/store"
 import { Provider } from 'react-redux';
+import Dashboard from './pages/Dashboard';
 
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 const router = createBrowserRouter([
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />
+  },
+  {
+    path: "/u",
+    element: <Dashboard />
   },
   {
     path: "/*",
