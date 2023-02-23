@@ -50,6 +50,8 @@ export default function Google({ mode }: Props) {
       }
       // add the data to the user
       dispatch(addUserState(data.login));
+      // store user data to localStorage
+      localStorage.setItem("cu", JSON.stringify(data.login));
       navigate("/u");
     },
   });
