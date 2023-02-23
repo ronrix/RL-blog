@@ -11,6 +11,7 @@ import store from "./state/store"
 import { Provider } from 'react-redux';
 import Dashboard from './pages/Dashboard';
 import { cache } from './state/cache';
+import BlogForm from './pages/BlogForm';
 
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/u",
     element: <Dashboard />
+  },
+  {
+    path: "/u/write-blog",
+    element: <BlogForm />
   },
   {
     path: "/*",
