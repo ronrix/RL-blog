@@ -1,29 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AuthModal from './AuthModal';
 import Button from './Button';
 import Logo from './Logo';
 
 export default function Header() {
-  const [showAuthModal, setShowAuthModal] = useState<{signin: boolean; signup: boolean}>({ signin: false, signup: false});
-
-  function handleShowSignupModal() {
-    console.log('clicked');
-    setShowAuthModal({signin: false, signup: true});
-  }
-
-  function handleShowSigninModal() {
-    console.log('clicked');
-    setShowAuthModal({signup: false, signin: true});
-  }
-
-  function handleHidewAuthModal() {
-    setShowAuthModal({ signin: false, signup: false });
-  }
+  const authModal = useSelector((state: any) => state.authModal.mode);
 
   return (
     <>
-    {(showAuthModal.signin || showAuthModal.signup) && <AuthModal fnSignin={handleShowSigninModal} fnSignup={handleShowSignupModal} mode={showAuthModal} handleClick={handleHidewAuthModal} />}
+    {(authModal.signin || authModal.signup) && <AuthModal mode={authModal} />}
       <div className="border border-b-gray-200 p-2 md:p-5 flex items-center justify-between">
           <div className="flex items-center">
               <Logo />
@@ -60,8 +47,8 @@ export default function Header() {
                   </svg>
               </Link>
 
-              <Button handleClick={handleShowSignupModal}>Sign up</Button>
-              <Button handleClick={handleShowSigninModal} noBg={true} additionalClass={'ml-2'}>Sign in</Button>
+              <Button mode={"signup"}>Sign up</Button>
+              <Button mode={"signin"} noBg={true} additionalClass={'ml-2'}>Sign in</Button>
           </div>
       </div>
     </>

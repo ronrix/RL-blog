@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addUserState } from "../../state/slice/userSlice";
 import { useState } from "react";
 import Toaster from "../Toaster";
+import { useNavigate } from "react-router-dom";
 
 const LOGIN = gql`
   query Query($username: String!, $email: String!, $uid: String!) {
@@ -11,6 +12,7 @@ const LOGIN = gql`
       id
       username
       email
+      avatar
       description
       followers
       links
@@ -20,11 +22,12 @@ const LOGIN = gql`
 `;
 
 const ADD_USER = gql`
-  mutation($username: String!, $email: String!, $password: String!, $description: String!) {
-    addUser(username: $username, email: $email, password: $password, description: $description) {
+  mutation($username: String!, $email: String!, $password: String!, $avatar: String!, $description: String!) {
+    addUser(username: $username, email: $email, password: $password, avatar: $avatar, description: $description) {
       id
       email
       username
+      avatar
       description
       createdAt
       updatedAt
@@ -39,6 +42,7 @@ type Props = {
 export default function Google({ mode }: Props) {
   const dispatch = useDispatch();
   const [err, setErr] = useState<{value: string; name: string}>();
+  const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: async (credential) => {
@@ -46,15 +50,24 @@ export default function Google({ mode }: Props) {
         Authorization: `Bearer ${credential.access_token}`,
         'Content-Type': 'application/json',
       });
-      const url = 'https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses';
+      const url = 'https://people.googleapis.com/v1/people/me?personFields=names,emailAddresses,photos';
       const response = await fetch(url, {method: "GET", headers});
-      const { emailAddresses, names }= await response.json();
+      const { emailAddresses, names, photos }= await response.json();
 
       // add the user
       if(mode.signup) {
-        const { data } = await addUser({variables: { username: names[0].displayName, email: emailAddresses[0].value, password: emailAddresses[0].metadata.source.id, description: "This is sample description" }});
+        const { data, errors } = await addUser({variables: { username: names[0].displayName, email: emailAddresses[0].value, password: emailAddresses[0].metadata.source.id, avatar: photos[0].url, description: "This is sample description" }});
+        if(errors) {
+          // TODO: display notification message for error
+          console.log(errors);
+          setErr({ name: errors[0].name, value: errors[0].message });
+          return;
+        }
         // add the data to the user after creating the user
         dispatch(addUserState(data.addUser));
+
+        navigate("/u");
+        return;
       }
       // login the user
       const { data, error } = await getUser({ variables: { username: names[0].displayName, email: emailAddresses[0].value, uid: emailAddresses[0].metadata.source.id }});
@@ -65,6 +78,7 @@ export default function Google({ mode }: Props) {
       }
       // add the data to the user
       dispatch(addUserState(data.login));
+      navigate("/u");
     },
   });
   const [getUser] = useLazyQuery(LOGIN);
