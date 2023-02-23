@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import useRetrieveUser from '../hooks/useRetireiveUser';
 import AuthModal from './AuthModal';
+import Avatar from './Avatar';
 import Button from './Button';
 import Logo from './Logo';
 
 export default function Header() {
   const authModal = useSelector((state: any) => state.authModal.mode);
+  const user = useSelector((state: any) => state.user?.value);
+
+  useRetrieveUser();
 
   return (
     <>
@@ -47,8 +52,20 @@ export default function Header() {
                   </svg>
               </Link>
 
-              <Button mode={"signup"}>Sign up</Button>
-              <Button mode={"signin"} noBg={true} additionalClass={'ml-2'}>Sign in</Button>
+              { user?.id ? (
+                <>
+                    <Link to="/u/write-blog" className='text-black'>
+                        <i className="fa-regular fa-pen-to-square text-lg mr-3 hover:text-gray-500 cursor-pointer"></i>
+                    </Link>
+                    <h3 className='hidden sm:block m-0 p-0'>Welcome, {user.username}</h3>
+                    <Avatar imgSrc={user?.avatar} />
+                </>
+                ) : (
+                <>
+                    <Button mode={"signup"}>Sign up</Button>
+                    <Button mode={"signin"} noBg={true} additionalClass={'ml-2'}>Sign in</Button>
+                </>
+                )}
           </div>
       </div>
     </>
