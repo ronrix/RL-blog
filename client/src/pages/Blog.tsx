@@ -6,11 +6,14 @@ import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import FloatingBlogFooter from '../components/Blog/FloatingBlogFooter'
 import BlogHeader from '../components/Blog/BlogHeader'
+import useRetrieveUser from '../hooks/useRetireiveUser'
 
 export default function Blog() {
 
   const [show, setShow] = useState<Boolean>(true);
   const footerRef = useRef<HTMLDivElement>(null);
+
+  useRetrieveUser();
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
