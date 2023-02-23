@@ -1,39 +1,11 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import { useLazyQuery, gql, useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { useDispatch } from "react-redux";
 import { addUserState } from "../../state/slice/userSlice";
 import { useState } from "react";
 import Toaster from "../Toaster";
 import { useNavigate } from "react-router-dom";
-
-const LOGIN = gql`
-  query Query($username: String!, $email: String!, $uid: String!) {
-    login(username: $username, email: $email, uid: $uid) {
-      id
-      username
-      email
-      avatar
-      description
-      followers
-      links
-      bookmarks
-    }
-  }
-`;
-
-const ADD_USER = gql`
-  mutation($username: String!, $email: String!, $password: String!, $avatar: String!, $description: String!) {
-    addUser(username: $username, email: $email, password: $password, avatar: $avatar, description: $description) {
-      id
-      email
-      username
-      avatar
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`
+import { ADD_USER, LOGIN } from "../../queries";
 
 type Props = {
   mode: { signup: Boolean; signin: Boolean };
