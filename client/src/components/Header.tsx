@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 import useRetrieveUser from '../hooks/useRetireiveUser';
 import AuthModal from './AuthModal';
 import Avatar from './Avatar';
@@ -12,6 +14,14 @@ export default function Header() {
   const user = useSelector((state: any) => state.user?.value);
 
   useRetrieveUser();
+
+  useEffect(() => {
+    const authCookie = Cookies.get("c_user");
+    // remove user data from localStorage if no auth cookie found
+    if(!authCookie) {
+        localStorage.removeItem("cu");
+    }
+  })
 
   return (
     <>

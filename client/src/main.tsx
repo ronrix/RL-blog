@@ -5,6 +5,7 @@ import './index.css'
 import Blog from './pages/Blog';
 import Search from './pages/Search';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
+import Cookie from "js-cookie";
 
 // state
 import store from "./state/store"
@@ -12,6 +13,8 @@ import { Provider } from 'react-redux';
 import Dashboard from './pages/Dashboard';
 import { cache } from './state/cache';
 import BlogForm from './pages/BlogForm';
+
+const authCookie = Cookie.get("c_user");
 
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -30,11 +33,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/u",
-    element: <Dashboard />
+    element: authCookie ? <Dashboard /> : <Navigate to="/" />
   },
   {
     path: "/u/write-blog",
-    element: <BlogForm />
+    element: authCookie ? <BlogForm /> : <Navigate to="/" />
   },
   {
     path: "/*",
