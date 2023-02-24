@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import Dashboard from './pages/Dashboard';
 import { cache } from './state/cache';
 import BlogForm from './pages/BlogForm';
+import Home from './pages/Home';
 
 const authCookie = Cookie.get("c_user");
 
@@ -25,7 +26,7 @@ export const client = new ApolloClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <h1>This is home</h1> 
+    element: <Home />
   },
   {
     path: "/search",
