@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 export const BlogSchema = new mongoose.Schema({
-  user_id: mongoose.Schema.Types.ObjectId,
+  user_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    unique: false,
+  },
   content: String,
   category: String,
   read_duration: String,
