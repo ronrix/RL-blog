@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { addUserState } from "../../state/slice/userSlice";
 import { useState } from "react";
 import Toaster from "../Toaster";
-import { useNavigate } from "react-router-dom";
 import { ADD_USER, LOGIN } from "../../queries";
 
 type Props = {
@@ -14,7 +13,6 @@ type Props = {
 export default function Google({ mode }: Props) {
   const dispatch = useDispatch();
   const [err, setErr] = useState<{value: string; name: string}>();
-  const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: async (credential) => {
@@ -38,7 +36,7 @@ export default function Google({ mode }: Props) {
         // add the data to the user after creating the user
         dispatch(addUserState(data.addUser));
 
-        navigate("/u");
+        window.location.href = "/u";
         return;
       }
       // login the user
@@ -52,7 +50,8 @@ export default function Google({ mode }: Props) {
       dispatch(addUserState(data.login));
       // store user data to localStorage
       localStorage.setItem("cu", JSON.stringify(data.login));
-      navigate("/u");
+      window.location.href = "/u";
+      // navigate("/u");
     },
   });
   const [getUser] = useLazyQuery(LOGIN);
