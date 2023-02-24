@@ -28,7 +28,7 @@ export default {
         // create a token with the user
         const token = await jwt.sign({id: user.id, usernmae: user.username, email: user.email}, process.env.SECRET_KEY, { expiresIn: "10h" });
         context.res.cookie("token", token, { httpOnly: true });
-        context.res.cookie("c_user", "don't clear this cookie!");
+        context.res.cookie("c_user", user.id);
 
         return user;
       } catch(err) {
@@ -62,7 +62,7 @@ export default {
         // create a token with the user
         const token = await jwt.sign({id: user.id, usernmae: user.username, email: user.email}, process.env.SECRET_KEY, { expiresIn: "10h" });
         context.res.cookie("token", token, { httpOnly: true });
-        context.res.cookie("c_user", "don't clear this cookie!");
+        context.res.cookie("c_user", user.id);
 
         return { id: 1, username: user.username, email: user.email, description: user.description };
       } catch(err: any) {
