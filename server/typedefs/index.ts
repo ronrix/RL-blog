@@ -17,6 +17,7 @@ export default `#graphql
   }
 
   type BlogType {
+    id: ID!
     user_id: ID!
     content: String!
     category: String!
@@ -34,6 +35,7 @@ export default `#graphql
     hello: String
     world: String
     user(id: ID!): UserType
+    getUserBlogs(id: ID!): [BlogType]
     login(username: String!, email: String!, uid: String!): UserType
     logout(id: ID!): Response
   }

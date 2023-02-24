@@ -51,6 +51,19 @@ export default {
           },
         });
       }
+    },
+    getUserBlogs: async (parent: any, args: any, context: any, info: any) => {
+      const user = await jwt.verify(context.token, process.env.SECRET_KEY);
+      try {
+        const blogs = await Blog.find({ user_id: user.id });
+        return blogs;
+      } catch(err) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {
