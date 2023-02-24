@@ -9,6 +9,8 @@ import { ADD_BLOG } from '../queries';
 import Toaster from '../components/Toaster';
 
  const ErrorSchema = Yup.object().shape({
+   title: Yup.string().required('Required'),
+   thumbnail: Yup.string().required('Required'),
    read_duration: Yup.number().required('Required'),
    content: Yup.string().required("Required"),
  });
@@ -22,6 +24,8 @@ export default function BlogForm() {
 
   const formik = useFormik({
     initialValues: {
+      title: '',
+      thumbnail: '',
       read_duration: '10',
       category: '',
       content: '',
@@ -49,6 +53,20 @@ export default function BlogForm() {
         <h5 className='m-0 text-lg'>Share new amazing blog</h5>
 
         <form method='POST' onSubmit={formik.handleSubmit} className="mt-3">
+          <label className="text-sm text-gray-700">
+            <span className="font-bold">Title</span>
+            <br />
+            <input type="text" name="title" onChange={formik.handleChange} value={formik.values.title} className={`outline-none border p-1 w-full bg-slate-50 shadow-inner ${formik.touched.title && formik.errors.title && 'border-red-500'}`} />
+            {formik.touched.title && formik.errors.title && <div className="text-xs text-red-500">{formik.errors.title}</div>}
+            <p className="text-gray-500 text-xs font-['Manrope']">This will be the title of your blog</p>
+          </label>
+          <label className="text-sm text-gray-700">
+            <span className="font-bold">Thumbnail</span>
+            <br />
+            <input type="text" name="thumbnail" onChange={formik.handleChange} value={formik.values.thumbnail} className={`outline-none border p-1 w-full bg-slate-50 shadow-inner ${formik.touched.thumbnail && formik.errors.thumbnail && 'border-red-500'}`} />
+            {formik.touched.thumbnail && formik.errors.thumbnail && <div className="text-xs text-red-500">{formik.errors.thumbnail}</div>}
+            <p className="text-gray-500 text-xs font-['Manrope']">This will be the thumbnail of your blog</p>
+          </label>
           <label className="text-sm text-gray-700">
             <span className="font-bold">Read duration (mins)</span>
             <br />
