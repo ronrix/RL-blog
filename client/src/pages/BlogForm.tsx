@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import Header from '../components/Header'
 import Info from '../components/Info';
 import { ADD_BLOG } from '../queries';
+import Toaster from '../components/Toaster';
 
  const ErrorSchema = Yup.object().shape({
    read_duration: Yup.number().required('Required'),
@@ -15,17 +16,24 @@ import { ADD_BLOG } from '../queries';
 export default function BlogForm() {
   const [show, setShow] = useState<boolean>(false);
   const [isNewCategory, setIsNewCategory] = useState<boolean>(false);
+  const [resMsg, setResMsg] = useState<{name: string; value: string}>();
   
   const [createBlog] = useMutation(ADD_BLOG);
 
   const formik = useFormik({
     initialValues: {
-      read_duration: 10,
+      read_duration: '10',
       category: '',
       content: '',
     },
-    onSubmit: (values) => {
-      createBlog({ variables: values });
+    onSubmit: async (values) => {
+      const { data, errors } = await createBlog({ variables: {user_id: "63f7488358148bc2d9e0e989", ...values} });
+      if(errors) {
+        setResMsg({name: errors[0].name, value: errors[0].message});
+        return;
+      }
+      setResMsg({name: "Success", value: "successfully created new blog content"});
+      formik.resetForm();
     },
     validationSchema: ErrorSchema
   });
@@ -34,11 +42,13 @@ export default function BlogForm() {
     <div>
       <Header />
 
+      {resMsg && <Toaster msg={resMsg} />}
+
       <div className="container mx-auto p-5">
         <h4 className="text-2xl font-bold m-0">Write new content</h4>
         <h5 className='m-0 text-lg'>Share new amazing blog</h5>
 
-        <form onSubmit={formik.handleSubmit} className="mt-3">
+        <form method='POST' onSubmit={formik.handleSubmit} className="mt-3">
           <label className="text-sm text-gray-700">
             <span className="font-bold">Read duration (mins)</span>
             <br />
@@ -51,7 +61,7 @@ export default function BlogForm() {
             <br />
             <select name="category" onChange={formik.handleChange} value={formik.values.category} className='bg-slate-50 outline-none p-1 px-2 shadow-inner'>
               <option value="none">none</option>
-              <option value="js" className="">Javascript</option>
+              <option value="javascript" className="">Javascript</option>
               <option value="python">Python</option>
             </select> 
             <p className="text-gray-500 text-xs font-['Manrope']">Specify the category of your content</p>
