@@ -5,6 +5,14 @@ export const BlogSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     unique: false,
   },
+  title: { 
+    type: String,
+    require: true,
+  },
+  thumbnail: { 
+    type: String,
+    require: true,
+  },
   content: String,
   category: String,
   read_duration: String,

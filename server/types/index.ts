@@ -2,6 +2,8 @@ import { ObjectId } from "mongoose";
 
 export type BlogType = {
   user_id: ObjectId;
+  title: String;
+  thumbnail: String;
   content: String;
   category: String;
   read_duration: String;
