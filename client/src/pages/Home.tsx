@@ -51,7 +51,7 @@ export default function Home() {
         {/* suggestions */}
         <div className='w-full lg:w-[50%]'>
           {blogs ? blogs?.map((blog: any, key: any) => {
-            return <BlogCard imgSize={90} key={key} description="The hidden history of Mardi Gras, from a Black perspective" title={blog.title} thumbnail='https://miro.medium.com/fit/c/200/134/1*1N6yt-MB6pKV9zHzhrvn-A.jpeg' user={blog.user} />
+            return <BlogCard key={key} blog={blog} />
           }) : <p className="font-['Manrope'] text-sm">No blogs have been created yet!</p>}
         </div>
         {/* sidebar */}
