@@ -33,6 +33,12 @@ export const GET_USER_BLOGS = gql`
   query($user_id: ID!) {
     getUserBlogs(user_id: $user_id) {
       id
+      user {
+        id
+        username
+        email
+        avatar
+      }
       title
       thumbnail
       content
