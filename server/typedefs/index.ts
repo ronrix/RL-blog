@@ -18,7 +18,7 @@ export default `#graphql
 
   type BlogType {
     id: ID!
-    user_id: ID!
+    user: UserType! 
     title: String!
     thumbnail: String!
     content: String!
