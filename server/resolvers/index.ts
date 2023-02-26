@@ -110,7 +110,7 @@ export default {
       try {
         const blog = new Blog(args);
         await blog.save();
-        return { user_id: args.user_id, content: args.content, category: args.category, read_duration: args.read_duration };
+        return blog.populate("user");
       } catch(err: any) {
         return new GraphQLError("Something went wrong!", {
           extensions: {

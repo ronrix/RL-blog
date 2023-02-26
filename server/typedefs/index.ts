@@ -20,6 +20,7 @@ export default `#graphql
     id: ID!
     user: UserType! 
     title: String!
+    description: String!
     thumbnail: String!
     content: String!
     category: String!
@@ -46,6 +47,6 @@ export default `#graphql
   type Mutation {
     addUser(username: String!, email: String!, password: String!, avatar: String!, description: String!, followers: [String!], links: [String!], bookmarks: [String!]): UserType
     completeProfile(id: ID!, followers: [String!], links: [String!], bookmarks: [String!]): UserType
-    createBlog(user_id: ID!, title: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
+    createBlog(user: ID!, title: String!, description: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
   }
 `;
