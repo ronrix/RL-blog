@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import React from 'react';
 
 import Header from '../components/Header';
 import SuggestionsCard from '../components/Suggestions/SuggestionsCard';
-import { GET_USER_BLOGS } from '../queries';
-import { useSelector } from 'react-redux';
-import { authCookie } from '../state/store';
+import useGetBlogs from '../hooks/useGetBlogs';
 
 export default function Dashboard() {
-  const [getUserBlogs] = useLazyQuery(GET_USER_BLOGS);
-  const [blogs, setBlogs] = useState<any>();
+  const blogs = useGetBlogs();
 
-  useEffect(() => {
-    (async() => {
-      const { data } = await getUserBlogs({ variables: { user_id: authCookie }})
-      setBlogs(data);
-    })();
-  }, []);
-  return (
+ return (
     <div>
       <Header />
 
       <div className="container mx-auto p-5">
         <div>
           <h4 className="sticky top-0 bg-white py-2 font-bold text-lg">Your contents</h4>
-          {blogs ? blogs.getUserBlogs?.map((blog: any) => {
+          {blogs ? blogs.map((blog: any) => {
             return (<div key={blog.id} className="border border-t-0 border-r-0 border-l-0">
               <SuggestionsCard user={blog.user} title={blog.title} thumbnail={blog.thumbnail} />
             </div>)

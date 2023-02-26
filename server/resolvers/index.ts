@@ -55,7 +55,19 @@ export default {
     },
     getUserBlogs: async (parent: any, args: any, context: any, info: any) => {
       try {
-        const blogs = await Blog.find({ user: args.user_id }).populate("user")
+        const blogs = await Blog.find({ user: args.user_id }).populate("user");
+        return blogs;
+      } catch(err) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    }, 
+    getAllBlogs: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const blogs = await Blog.find().populate("user");
         return blogs;
       } catch(err) {
         return new GraphQLError('Something went wrong!', {

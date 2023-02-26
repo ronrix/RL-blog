@@ -27,8 +27,8 @@ export default function useRetrieveUser() {
           return;
       }
       // else: set the user data to redux state and to the localStorage
-      dispatch(addUserState(data));
-      localStorage.setItem("cu", data);
+      dispatch(addUserState(data.user));
+      localStorage.setItem("cu", JSON.stringify(data.user));
     })();
   }, []);
 

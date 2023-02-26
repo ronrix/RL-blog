@@ -77,3 +77,22 @@ export const CHECK_USER_AUTH = gql`
   }
 `;
 
+export const GET_BLOGS = gql`
+  query {
+    getAllBlogs {
+      id
+      user {
+        id
+        username
+        email
+        avatar
+      }
+      title
+      thumbnail
+      content
+      category
+      read_duration
+      createdAt 
+    }
+  }
+`;
