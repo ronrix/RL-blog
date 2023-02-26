@@ -40,6 +40,7 @@ export const GET_USER_BLOGS = gql`
         avatar
       }
       title
+      description
       thumbnail
       content
       category
@@ -50,9 +51,14 @@ export const GET_USER_BLOGS = gql`
 `;
 
 export const ADD_BLOG = gql`
-  mutation($user_id: ID!, $title: String!, $thumbnail: String!, $content: String!, $category: String!, $read_duration: String!) {
-    createBlog(user_id: $user_id, title: $title, thumbnail: $thumbnail, content: $content, category: $category, read_duration: $read_duration) {
-      user_id
+  mutation($user: ID!, $title: String!, $description: String!, $thumbnail: String!, $content: String!, $category: String!, $read_duration: String!) {
+    createBlog(user: $user, title: $title, description: $description, thumbnail: $thumbnail, content: $content, category: $category, read_duration: $read_duration) {
+      user {
+        id
+        username
+        email
+        avatar
+      }
       content
       category
       read_duration
@@ -88,6 +94,7 @@ export const GET_BLOGS = gql`
         avatar
       }
       title
+      description
       thumbnail
       content
       category

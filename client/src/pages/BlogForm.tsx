@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import Info from '../components/Info';
 import { ADD_BLOG } from '../queries';
 import Toaster from '../components/Toaster';
+import { authCookie } from '../state/store';
 
  const ErrorSchema = Yup.object().shape({
    title: Yup.string().required('Required'),
@@ -25,13 +26,14 @@ export default function BlogForm() {
   const formik = useFormik({
     initialValues: {
       title: '',
+      description: '',
       thumbnail: '',
       read_duration: '10',
       category: '',
       content: '',
     },
     onSubmit: async (values) => {
-      const { data, errors } = await createBlog({ variables: {user_id: "63f7488358148bc2d9e0e989", ...values} });
+      const { data, errors } = await createBlog({ variables: { user: authCookie, ...values } });
       if(errors) {
         setResMsg({name: errors[0].name, value: errors[0].message});
         return;
@@ -59,6 +61,13 @@ export default function BlogForm() {
             <input type="text" name="title" onChange={formik.handleChange} value={formik.values.title} className={`outline-none border p-1 w-full bg-slate-50 shadow-inner ${formik.touched.title && formik.errors.title && 'border-red-500'}`} />
             {formik.touched.title && formik.errors.title && <div className="text-xs text-red-500">{formik.errors.title}</div>}
             <p className="text-gray-500 text-xs font-['Manrope']">This will be the title of your blog</p>
+          </label>
+          <label className="text-sm text-gray-700">
+            <span className="font-bold">Description</span>
+            <br />
+            <input type="text" name="description" onChange={formik.handleChange} value={formik.values.description} className={`outline-none border p-1 w-full bg-slate-50 shadow-inner ${formik.touched.description && formik.errors.description && 'border-red-500'}`} />
+            {formik.touched.description && formik.errors.description && <div className="text-xs text-red-500">{formik.errors.description}</div>}
+            <p className="text-gray-500 text-xs font-['Manrope']">This will be the description of your blog</p>
           </label>
           <label className="text-sm text-gray-700">
             <span className="font-bold">Thumbnail</span>
