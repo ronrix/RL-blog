@@ -43,6 +43,7 @@ export default {
       // TODO: remove cookie token
       try {
         context.res.clearCookie("token");
+        context.res.clearCookie("c_user");
         return { msg: "Successfully logout", status: 200 };
       } catch(err) {
         return new GraphQLError('Something went wrong!', {
@@ -53,9 +54,8 @@ export default {
       }
     },
     getUserBlogs: async (parent: any, args: any, context: any, info: any) => {
-      const user = await jwt.verify(context.token, process.env.SECRET_KEY);
       try {
-        const blogs = await Blog.find({ user_id: user.id });
+        const blogs = await Blog.find({ user_id: args.user_id });
         return blogs;
       } catch(err) {
         return new GraphQLError('Something went wrong!', {

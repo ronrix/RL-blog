@@ -37,7 +37,7 @@ export default `#graphql
     hello: String
     world: String
     user(id: ID!): UserType
-    getUserBlogs: [BlogType]
+    getUserBlogs(user_id: ID!): [BlogType]
     login(username: String!, email: String!, uid: String!): UserType
     logout(id: ID!): Response
   }

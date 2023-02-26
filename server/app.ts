@@ -13,7 +13,7 @@ import { applyMiddleware } from 'graphql-middleware';
 import connectDB from './config/db';
 import typeDefs from "./typedefs";
 import resolvers from "./resolvers";
-import { shield, rule } from 'graphql-shield';
+import { shield, rule, allow } from 'graphql-shield';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
 import jwt from 'jsonwebtoken';
@@ -46,11 +46,12 @@ const main = async () => {
   const permissions = shield({
     Query: {
       hello: isAuthenticated,
+      user: isAuthenticated
     },
     Mutation: {
       createBlog: isAuthenticated,
     }
-  });
+  }, { fallbackRule: allow, debug: true });
   const permissionSchema = applyMiddleware(schema, permissions);
   const server = new ApolloServer<MyContext>({
     schema: permissionSchema,
