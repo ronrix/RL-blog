@@ -1,47 +1,17 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import useRetrieveUser from '../hooks/useRetireiveUser';
 import AuthModal from './AuthModal';
 import Avatar from './Avatar';
 import Button from './Button';
 import Logo from './Logo';
-import { useLazyQuery } from '@apollo/client';
-import { CHECK_USER_AUTH } from '../queries';
-import { addUserState } from '../state/slice/userSlice';
-import { authCookie } from '../state/store';
-
 export default function Header() {
   const authModal = useSelector((state: any) => state.authModal.mode);
   const userData = useSelector((state: any) => state.user?.value);
-  const dispatch = useDispatch();
-
-  const [user] = useLazyQuery(CHECK_USER_AUTH);
 
   useRetrieveUser();
-
-  useEffect(() => {
-    // check user authentication from the server
-    (async() => {
-        // remove user data from localStorage if no auth cookie found
-        if(!authCookie) {
-            localStorage.removeItem("cu");
-        }
-
-        // if there is authCookie, we will request for the authenticity of the user
-        const {data, error} = await user({ variables: { user_id: authCookie } });
-        // if user data is null, then 
-        if(!data && error?.message === "jwt expired") {
-            localStorage.removeItem("cu");
-            return;
-        }
-        // else: set the user data to redux state
-        dispatch(addUserState(data));
-    })();
-
-  }, []);
 
   return (
     <>
