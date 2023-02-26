@@ -3,15 +3,23 @@ import { Link } from 'react-router-dom'
 import SuggestionsHeader from './SuggestionsHeader'
 import SuggestionsTitle from './SuggestionsTitle'
 
-export default function SuggestionsCard() {
+type Props = {
+  title: string;
+  thumbnail: string;
+  user: any;
+}
+
+export default function SuggestionsCard(props: Props) {
+  const { title, user, thumbnail } = props;
+
   return (
     <Link to="link" className='flex flex-col text-black mt-5'>
-      <div className='flex items-start'>
+      <div className='flex items-start justify-between'>
         <div className="w-[80%]">
-          <SuggestionsHeader />
-          <SuggestionsTitle />
+          <SuggestionsHeader user={user} />
+          <SuggestionsTitle title={title} />
         </div>
-        <img alt="" className="ut w-[60px]" src="https://miro.medium.com/focal/56/56/50/50/1*l-Ab8NBwzMN6AnkD4gEgLw.png" width="56" loading="lazy" role="presentation"></img>
+        <img alt="" className="ut w-[80px]" src={thumbnail} width="56" loading="lazy" role="presentation"></img>
       </div>
     </Link>
   )

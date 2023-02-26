@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { authCookie } from '../state/store';
 
 export default function Dashboard() {
-  const userData = useSelector((state: any) => state.user?.value);
   const [getUserBlogs] = useLazyQuery(GET_USER_BLOGS);
   const [blogs, setBlogs] = useState<any>();
 
@@ -27,7 +26,7 @@ export default function Dashboard() {
           <h4 className="sticky top-0 bg-white py-2 font-bold text-lg">Your contents</h4>
           {blogs ? blogs.getUserBlogs?.map((blog: any) => {
             return (<div key={blog.id} className="border border-t-0 border-r-0 border-l-0">
-              <SuggestionsCard user={userData} title={blog.title} thumbnail={blog.thumbnail} />
+              <SuggestionsCard user={blog.user} title={blog.title} thumbnail={blog.thumbnail} />
             </div>)
           }) : <p className="font-['Manrope'] text-sm">No contents</p>}
         </div>

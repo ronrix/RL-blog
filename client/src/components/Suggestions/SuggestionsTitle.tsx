@@ -1,10 +1,12 @@
 import React from 'react'
-import SuggestionsHeader from './SuggestionsHeader'
 
-export default function SuggestionsTitle() {
+type Props = {
+  title: string;
+}
+
+export default function SuggestionsTitle(props: Props) {
+  const { title } = props;
   return (
-    <div className="text-base font-bold m-0 p-0">
-      I Paid a Professional to Edit a ChatGPT-Written Article. Hilarity Ensued
-    </div>
+    <div className="text-base font-bold m-0 p-0">{title}</div>
   )
 }
