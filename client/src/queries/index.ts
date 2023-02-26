@@ -30,8 +30,8 @@ export const ADD_USER = gql`
 `
 
 export const GET_USER_BLOGS = gql`
-  query {
-    getUserBlogs {
+  query($user_id: ID!) {
+    getUserBlogs(user_id: $user_id) {
       id
       title
       thumbnail
@@ -52,6 +52,21 @@ export const ADD_BLOG = gql`
       read_duration
       createdAt
       updatedAt
+    }
+  }
+`;
+
+export const CHECK_USER_AUTH = gql`
+  query($user_id: ID!) {
+    user(id: $user_id) {
+      id
+      username
+      email
+      avatar
+      bookmarks
+      description
+      links
+      followers
     }
   }
 `;

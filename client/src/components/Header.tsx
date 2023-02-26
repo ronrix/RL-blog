@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -8,20 +8,40 @@ import AuthModal from './AuthModal';
 import Avatar from './Avatar';
 import Button from './Button';
 import Logo from './Logo';
+import { useLazyQuery } from '@apollo/client';
+import { CHECK_USER_AUTH } from '../queries';
+import { addUserState } from '../state/slice/userSlice';
+import { authCookie } from '../state/store';
 
 export default function Header() {
   const authModal = useSelector((state: any) => state.authModal.mode);
-  const user = useSelector((state: any) => state.user?.value);
+  const userData = useSelector((state: any) => state.user?.value);
+  const dispatch = useDispatch();
+
+  const [user] = useLazyQuery(CHECK_USER_AUTH);
 
   useRetrieveUser();
 
   useEffect(() => {
-    const authCookie = Cookies.get("c_user");
-    // remove user data from localStorage if no auth cookie found
-    if(!authCookie) {
-        localStorage.removeItem("cu");
-    }
-  })
+    // check user authentication from the server
+    (async() => {
+        // remove user data from localStorage if no auth cookie found
+        if(!authCookie) {
+            localStorage.removeItem("cu");
+        }
+
+        // if there is authCookie, we will request for the authenticity of the user
+        const {data, error} = await user({ variables: { user_id: authCookie } });
+        // if user data is null, then 
+        if(!data && error?.message === "jwt expired") {
+            localStorage.removeItem("cu");
+            return;
+        }
+        // else: set the user data to redux state
+        dispatch(addUserState(data));
+    })();
+
+  }, []);
 
   return (
     <>
@@ -62,13 +82,13 @@ export default function Header() {
                   </svg>
               </Link>
 
-              { user?.id ? (
+              { Object.keys(userData).length ? (
                 <>
                     <Link to="/u/write-blog" className='text-black'>
                         <i className="fa-regular fa-pen-to-square text-lg mr-3 hover:text-gray-500 cursor-pointer"></i>
                     </Link>
-                    <h3 className='hidden sm:block m-0 p-0'>Welcome, {user.username}</h3>
-                    <Avatar imgSrc={user?.avatar} />
+                    <h3 className='hidden sm:block m-0 p-0'>Welcome, {userData.username}</h3>
+                    <Avatar imgSrc={userData?.avatar} />
                 </>
                 ) : (
                 <>
