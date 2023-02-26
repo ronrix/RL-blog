@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     element: authCookie ? <BlogForm /> : <Navigate to="/" />
   },
   {
-    path: "/*",
+    path: "*",
     element: <Blog />
   },
 ]);
