@@ -41,7 +41,7 @@ export default `#graphql
     getUserBlogs(user_id: ID!): [BlogType]
     getAllBlogs: [BlogType]
     login(username: String!, email: String!, uid: String!): UserType
-    logout(id: ID!): Response
+    logout: Response
   }
 
   type Mutation {

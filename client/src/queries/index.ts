@@ -15,6 +15,15 @@ export const LOGIN = gql`
   }
 `;
 
+export const LOGOUT = gql`
+  query {
+    logout {
+      msg
+      status
+    }
+  }
+`;
+
 export const ADD_USER = gql`
   mutation($username: String!, $email: String!, $password: String!, $avatar: String!, $description: String!) {
     addUser(username: $username, email: $email, password: $password, avatar: $avatar, description: $description) {
