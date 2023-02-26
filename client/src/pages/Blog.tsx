@@ -40,6 +40,8 @@ export default function Blog() {
         <div className="container mx-auto flex">
           <div className="flex-1 p-5 md:p-20  border border-r-gray-200 border-t-transparent border-l-transparent border-b-transparent ">
             <BlogHeader duration={blog.read_duration} avatar={blog.user.avatar} date={blog.createdAt} name={blog.user.username} />
+            <h1 className="text-5xl font-bold">{blog.title}</h1>
+            <h2 className="text-base font-bold">{blog.description}</h2>
             <BlogContent content={blog.content} />
             <BlogFooter footerRef={footerRef} />
 
