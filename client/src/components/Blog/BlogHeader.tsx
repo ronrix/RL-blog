@@ -1,18 +1,28 @@
+import moment from 'moment';
 import React from 'react'
 import Abbr from '../Abbr'
 
-export default function BlogHeader() {
+type Props = {
+  avatar: string;
+  name: string;
+  date: string;
+  duration: string;
+}
+
+export default function BlogHeader(props: Props) {
+  const { avatar, name, date, duration } = props;
+
   return (
     <div className="flex flex-col sm:flex-row md:items-center justify-between mb-10">
         <div className="flex items-center">
           {/* user avatar */}
           <div>
-              <img className="rouned-full w-[80px] sm:w-[100px]" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="this is user's avatar" />
+              <img className="rounded-full w-[80px] sm:w-[100px] my-0" src={avatar} alt="this is user's avatar" />
           </div>
           {/* usre info */}
-          <div className="flex-1">
-              <h3 className="text-lg md:text-2xl font-medium">Erica Dhawan</h3>
-              <p className="text-md md:text-lg text-gray-700">Feb 8 . 3 min read </p>
+          <div className="flex-1 ml-5">
+              <h3 className="text-lg md:text-2xl font-medium">{name}</h3>
+              <p className="text-md md:text-lg text-gray-700">{moment(date).format("MMM Do")} . {duration} min read </p>
           </div>
         </div>
         {/* links */}

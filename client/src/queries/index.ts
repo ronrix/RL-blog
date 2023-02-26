@@ -92,6 +92,8 @@ export const GET_BLOGS = gql`
         username
         email
         avatar
+        followers
+        description
       }
       title
       description

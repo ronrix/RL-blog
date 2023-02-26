@@ -6,9 +6,10 @@ import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import FloatingBlogFooter from '../components/Blog/FloatingBlogFooter'
 import BlogHeader from '../components/Blog/BlogHeader'
+import { useSelector } from 'react-redux'
 
 export default function Blog() {
-
+  const blog = useSelector((state: any) => state.blogs.blog);
   const [show, setShow] = useState<Boolean>(true);
   const footerRef = useRef<HTMLDivElement>(null);
 
@@ -38,14 +39,14 @@ export default function Blog() {
 
         <div className="container mx-auto flex">
           <div className="flex-1 p-5 md:p-20  border border-r-gray-200 border-t-transparent border-l-transparent border-b-transparent ">
-            <BlogHeader />
-            <BlogContent />
+            <BlogHeader duration={blog.read_duration} avatar={blog.user.avatar} date={blog.createdAt} name={blog.user.username} />
+            <BlogContent content={blog.content} />
             <BlogFooter footerRef={footerRef} />
 
             <FloatingBlogFooter show={show} />
           </div>
 
-          <Sidebar />
+          <Sidebar user={blog.user} />
         </div>
 
         <Footer />
