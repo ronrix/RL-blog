@@ -61,15 +61,15 @@ export default function Home() {
           {/* categories */}
           <div>
             <div className='flex flex-wrap gap-3 mt-5'>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Programming</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Data Science</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Technology</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Self improvement</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Writing</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Relationships</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Machine learning</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Prodcutivity</Link>
-              <Link to="/category/" className='px-4 text-gray-500 border rounded font-[Manrope] text-sm'>Politics</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Programming</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Data Science</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Technology</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Self improvement</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Writing</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Relationships</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Machine learning</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Prodcutivity</Link>
+              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Politics</Link>
             </div>
             <SuggestionsFooter />
           </div>
