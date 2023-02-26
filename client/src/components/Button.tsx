@@ -17,7 +17,7 @@ export default function Button({ children, noBg, additionalClass, mode }: Props)
   }
 
   return (
-    <button onClick={toggleModal} className={`${additionalClass} ${noBg ? 'bg-none' : 'bg-green-600 text-white py-2 px-4 border rounded-full hover:bg-green-500'} uppercase text-xs md:text-sm`}>
+    <button onClick={toggleModal} className={`${additionalClass} ${noBg ? 'bg-none' : 'bg-green-600 text-white py-2 px-4 rounded-full hover:bg-green-500'} uppercase text-xs md:text-sm`}>
         {children}
     </button>
   )

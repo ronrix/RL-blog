@@ -16,12 +16,12 @@ export default function Header() {
   return (
     <>
     {(authModal.signin || authModal.signup) && <AuthModal mode={authModal} />}
-      <div className="border border-b-gray-200 p-2 md:p-5 flex items-center justify-between">
+      <div className="p-2 md:p-5 flex items-center justify-between bg-transparent">
           <div className="flex items-center">
               <Logo />
             
               {/* desktop search */}
-              <div className="ml-5 hidden sm:flex item-center rounded-full px-5 bg-gray-100 py-2">
+              <div className="ml-5 hidden sm:flex item-center rounded-full px-5 bg-transparent py-2">
                   <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"> 
                       <title>icon 111 search</title>
                       <desc>Created with Sketch.</desc>
@@ -32,7 +32,7 @@ export default function Header() {
                           </g>
                       </g>
                   </svg>
-                  <input type="text" placeholder='Search RL' className="ml-3 bg-transparent outline-none text-sm" />
+                  <input type="text" placeholder='Search RL' className="ml-3 bg-transparent outline-none text-sm placeholder:text-black" />
               </div> 
           </div>
 
