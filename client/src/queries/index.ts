@@ -114,3 +114,26 @@ export const GET_BLOGS = gql`
     }
   }
 `;
+
+export const GET_BLOG = gql`
+  query($id: ID!) {
+    getBlog(id: $id) {
+      id
+      user {
+        id
+        username
+        email
+        avatar
+        followers
+        description
+      }
+      title
+      description
+      thumbnail
+      content
+      category
+      read_duration
+      createdAt 
+    }
+  }
+`;

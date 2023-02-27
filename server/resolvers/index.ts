@@ -76,6 +76,18 @@ export default {
           },
         });
       }
+    },
+    getBlog: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const blog = await Blog.findById(args.id).populate("user");
+        return blog;
+      } catch(err) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {
