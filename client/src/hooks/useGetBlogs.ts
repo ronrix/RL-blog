@@ -6,7 +6,7 @@ import { addBlogs } from "../state/slice/blogSlice";
 import { authCookie } from "../state/store";
 
 export default function useGetBlogs() {
-  const [getUserBlogs] = useLazyQuery(GET_USER_BLOGS);
+  const [getUserBlogs, {loading}] = useLazyQuery(GET_USER_BLOGS);
   const dispatch = useDispatch();
   const [blogs, setBlogs] = useState<any>();
 
@@ -19,5 +19,5 @@ export default function useGetBlogs() {
     })();
   }, []);
 
-  return blogs;
+  return [blogs, loading];
 }

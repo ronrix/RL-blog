@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import SuggestionsCard from '../components/Suggestions/SuggestionsCard';
 import useGetBlogs from '../hooks/useGetBlogs';
 
 export default function Dashboard() {
-  const blogs = useGetBlogs();
+  const [blogs, loading] = useGetBlogs();
 
  return (
     <div>
@@ -13,10 +14,10 @@ export default function Dashboard() {
 
       <div className="container mx-auto p-5">
         <div>
-          <h4 className="sticky top-0 bg-white py-2 font-bold text-lg">Your contents</h4>
-          {blogs ? blogs.map((blog: any) => {
+          <h4 className="sticky top-0 bg-white py-2 font-bold text-lg">Your blogs</h4>
+          {loading ? <Loading /> : blogs ? blogs.map((blog: any) => {
             return (<div key={blog.id} className="border border-t-0 border-r-0 border-l-0">
-              <SuggestionsCard user={blog.user} title={blog.title} thumbnail={blog.thumbnail} />
+              <SuggestionsCard id={blog.id} user={blog.user} title={blog.title} thumbnail={blog.thumbnail} />
             </div>)
           }) : <p className="font-['Manrope'] text-sm">No contents</p>}
         </div>
