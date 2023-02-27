@@ -1,8 +1,6 @@
-import moment from 'moment';
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toDisplayBlog } from '../state/slice/blogSlice';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import SuggestionsHeader from './Suggestions/SuggestionsHeader'
 import SuggestionsTitle from './Suggestions/SuggestionsTitle';
@@ -13,20 +11,17 @@ type Props = {
 
 
 export default function BlogCard(props: Props) {
-  const { blog: { user, description, thumbnail, title, createdAt, read_duration } } = props;
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { blog: { id, user, description, thumbnail, title, createdAt, read_duration } } = props;
+  const path = title.replace(/ /g, '-').toLowerCase();
   
   function handleToShowBlog() {
-    // add the to show blog to the state before redirecting to the blog content
-    dispatch(toDisplayBlog(props.blog));
-    
-    const path = `/${title}`;
-    navigate(path);
+    // store the id of the blog to the localStorage, for later use
+    // when the user reloads the blog page, it will be used for querying the data of that blog
+    localStorage.setItem("blogId", id);
   }
 
   return (
-    <div onClick={handleToShowBlog} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
+    <Link to={path} onClick={handleToShowBlog} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
       <div className='flex justify-between gap-3'>
         <div className="w-[80%] flex flex-col justify-between">
           <div>
@@ -41,6 +36,6 @@ export default function BlogCard(props: Props) {
         </div>
         <img alt="" className={`ut w-[200px] h-[134px] my-0`} src={thumbnail} loading="lazy" role="presentation"></img>
       </div>
-    </div>
+    </Link>
   )
 }

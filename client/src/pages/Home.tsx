@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import Loading from '../components/Loading'
 import SuggestionsFooter from '../components/Suggestions/SuggestionsFooter'
 import Trending from '../components/Trending'
 import useGetAllBlogs from '../hooks/useGetAllBlogs'
 
 export default function Home() {
-  const blogs = useGetAllBlogs();
+  const [blogs, loading] = useGetAllBlogs();
 
   return (
     <div>
@@ -49,8 +50,8 @@ export default function Home() {
     {/* suggestions and sidebar */}
       <div className='container mx-auto mt-10 flex gap-10 p-5 sm:p-0'>
         {/* suggestions */}
-        <div className='w-full lg:w-[50%]'>
-          {blogs ? blogs?.map((blog: any, key: any) => {
+        <div className='w-full lg:w-[50%] mb-5'>
+          {loading ? <Loading /> : blogs ? blogs?.map((blog: any, key: any) => {
             return <BlogCard key={key} blog={blog} />
           }) : <p className="font-['Manrope'] text-sm">No blogs have been created yet!</p>}
         </div>
