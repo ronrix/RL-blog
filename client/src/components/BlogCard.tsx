@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import SuggestionsHeader from './Suggestions/SuggestionsHeader'
 import SuggestionsTitle from './Suggestions/SuggestionsTitle';
+import { setBlogIdToLS } from '../utility/setBlogIdToLS';
 
 type Props = {
   blog: any;
@@ -13,15 +14,9 @@ type Props = {
 export default function BlogCard(props: Props) {
   const { blog: { id, user, description, thumbnail, title, createdAt, read_duration } } = props;
   const path = title.replace(/ /g, '-').toLowerCase();
-  
-  function handleToShowBlog() {
-    // store the id of the blog to the localStorage, for later use
-    // when the user reloads the blog page, it will be used for querying the data of that blog
-    localStorage.setItem("blogId", id);
-  }
 
   return (
-    <Link to={path} onClick={handleToShowBlog} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
+    <Link to={path} onClick={() => setBlogIdToLS(id)} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
       <div className='flex justify-between gap-3'>
         <div className="w-[80%] flex flex-col justify-between">
           <div>
