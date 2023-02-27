@@ -1,13 +1,17 @@
-import React from "react";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import React, { useEffect } from "react";
+import { GET_USER_BLOGS } from "../queries";
+import Loading from "./Loading";
 import Suggestions from "./Suggestions/Suggestions";
+import SuggestionsFooter from "./Suggestions/SuggestionsFooter";
 
 type Props = {
   user: any;
 }
 
 export default function Sidebar(props: Props) {
-  const { user: { avatar, username, followers, description }} = props;
-  console.log(props);
+  const { user: { id, avatar, username, followers, description }} = props;
+  const { data, loading } = useQuery(GET_USER_BLOGS, {variables: { user_id: id }});
 
   return (
     <div className="sticky top-0 w-[300px] xl:w-[400px] min-h-[100px] h-[100px] p-5 hidden lg:block">
@@ -31,7 +35,9 @@ export default function Sidebar(props: Props) {
 
         {/* suggestions */}
         <h4 className="font-bold mt-5">More from RL</h4>
-        <Suggestions />
+        {loading ?  <Loading /> : <Suggestions blogs={data.getUserBlogs} /> }
+
+        <SuggestionsFooter />
       </div>
     </div>
   );
