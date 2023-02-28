@@ -145,6 +145,19 @@ export default {
       }
     },
 
+    completeProfile: async (parent: any, args: UserType, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        const user = await User.updateOne({ id: userId }, { username: args.username, description: args.description, links: args.links });
+      } catch (err: any) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+
     createBlog: async (parent: any, args: BlogType, context: any, info: any) => {
       try {
         const blog = new Blog(args);

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 export const UserSchema = new mongoose.Schema({
   username: {
@@ -14,15 +14,15 @@ export const UserSchema = new mongoose.Schema({
   },
   description: String,
   followers: {
-    type: [],
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
   links: {
-    type: [String],
-    default: []
+    type: mongoose.Schema.Types.Mixed,
+    default: {} 
   },
   bookmarks: {
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
     default: []
   },
   password: String,

@@ -63,7 +63,7 @@ const main = async () => {
     '/graphql',
     json(),
     expressMiddleware(server, {
-      context: async ({ req, res }) => ({ token: req.cookies['token'], res }),
+      context: async ({ req, res }) => ({ token: req.cookies['token'], res, req }),
     }),
   );
   
