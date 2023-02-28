@@ -13,7 +13,7 @@ export default function Suggestions(props: Props) {
       {blogs.length && blogs.slice(0, 3).map((blog: any) => {
         return (
           <div className="mb-3">
-            <SuggestionsCard id={blog.id} key={blog.id} thumbnail={blog.thumbnail} title={blog.title} user={blog.user} />
+            <SuggestionsCard id={blog.id} key={blog.id} thumbnail={blog.thumbnail} title={blog.title} user={blog.user} category={blog.category} />
           </div>
         )
       })}

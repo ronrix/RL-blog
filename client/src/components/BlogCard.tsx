@@ -12,7 +12,7 @@ type Props = {
 
 
 export default function BlogCard(props: Props) {
-  const { blog: { id, user, description, thumbnail, title, createdAt, read_duration } } = props;
+  const { blog: { id, user, description, thumbnail, title, createdAt, read_duration, category} } = props;
   const path = title.replace(/ /g, '-').toLowerCase();
 
   return (
@@ -20,7 +20,7 @@ export default function BlogCard(props: Props) {
       <div className='flex justify-between gap-3'>
         <div className="w-[80%] flex flex-col justify-between">
           <div>
-            <SuggestionsHeader user={user} />
+            <SuggestionsHeader user={user} category={category} />
             <SuggestionsTitle title={title} />
             <p className='text-gray-700 text-base font-["Manrope"]'>{description}</p>
           </div>

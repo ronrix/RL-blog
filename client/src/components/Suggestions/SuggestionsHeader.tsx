@@ -1,11 +1,12 @@
 import React from 'react'
 
 type Props = {
-  user: any
+  user: any;
+  category: string;
 }
 
 export default function SuggestionsHeader(props: Props) {
-  const { user } = props;
+  const { user, category } = props;
   return (
     <div className='flex items-center'>
         {/* user avatar */}
@@ -14,7 +15,7 @@ export default function SuggestionsHeader(props: Props) {
           alt="this is user's avatar"
         />
 
-        <h5 className="font-medium text-sm p-0 m-0"><span className="capitalize">{user && user.username}</span> <span className="text-gray-600">in</span> Prototypr</h5>
+        <h5 className="font-medium text-sm p-0 m-0"><span className="capitalize">{user && user.username}</span> <span className="text-gray-600">in</span> {category}</h5>
     </div>
   )
 }
