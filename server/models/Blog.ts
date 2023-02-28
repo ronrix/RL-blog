@@ -18,6 +18,9 @@ export const BlogSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  reader_count: {
+    type: Number,
+  },
   content: String,
   category: String,
   read_duration: String,
