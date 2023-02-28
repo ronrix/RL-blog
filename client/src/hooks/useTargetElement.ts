@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react";
 
-export default function useTargetElement(footerRef: RefObject<HTMLDivElement>) {
+export default function useTargetElement(footerRef: RefObject<HTMLDivElement>, reload?: boolean) {
   const [show, setShow] = useState<Boolean>(true);
 
   useEffect(() => {
@@ -19,9 +19,9 @@ export default function useTargetElement(footerRef: RefObject<HTMLDivElement>) {
     }
 
     return () => {
-      observer.disconnect;
+      observer.disconnect();
     };
-  }, []);
+  }, [footerRef, reload]);
 
   return show;
 }

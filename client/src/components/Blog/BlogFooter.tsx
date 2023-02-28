@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Abbr from '../Abbr';
 
 type Props = {
   footerRef: React.MutableRefObject<HTMLDivElement | null>;
+  reload: () => void;
 }
 
-export default function BlogFooter({ footerRef }: Props) {
+export default function BlogFooter({ footerRef, reload }: Props) {
+
+  useEffect(() => {
+    reload();
+  }, [footerRef]);
+
   return (
     <div ref={footerRef} className="flex items-center justify-between w-full mt-20">
         <div className="w-[20%] md:w-[10%] self-end flex items-center justify-between">
