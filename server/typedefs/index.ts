@@ -34,6 +34,11 @@ export default `#graphql
     status: Int!
   }
 
+  type Category {
+    category_name: String!
+    createdAt: GraphQLDateTime
+  }
+
   type Query {
     hello: String
     world: String
@@ -44,6 +49,7 @@ export default `#graphql
     login(username: String!, email: String!, uid: String!): UserType
     getTrendingBlogs: [BlogType]
     logout: Response
+    getAllCategories: [Category]
   }
 
   type Mutation {

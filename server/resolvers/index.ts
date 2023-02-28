@@ -103,6 +103,18 @@ export default {
           },
         });
       }
+    },
+    getAllCategories: async (parent: any, args: UserType, context: any, info: any) => {
+      try {
+        const categories = await Category.find();
+        return categories;
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {
@@ -141,7 +153,6 @@ export default {
         // store the new category to DB
         // if category already exists in DB, then ignore
         const categoryExists = await Category.findOne({category_name: args.category});
-        console.log(categoryExists);
         if(!categoryExists) {
           const category = new Category({ category_name: args.category });
           await category.save();
