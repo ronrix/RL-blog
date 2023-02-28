@@ -8,10 +8,12 @@ import Loading from '../components/Loading'
 import SuggestionsFooter from '../components/Suggestions/SuggestionsFooter'
 import Trending from '../components/Trending'
 import useGetAllBlogs from '../hooks/useGetAllBlogs'
+import useGetTrendingBlogs from '../hooks/useGetTrendingBlogs'
 import { toggleAuthModal } from '../state/slice/authModalSlice'
 
 export default function Home() {
   const [blogs, loading] = useGetAllBlogs();
+  const {trendingBlogs, trendingLoading} = useGetTrendingBlogs();
   const dispatch = useDispatch();
 
   return (
@@ -40,12 +42,9 @@ export default function Home() {
           </h5>
 
           <div className="grid grid-cols-1 w-full sm:w-auto sm:grid-cols-2 md:grid-cols-3 gap-4 place-items-center mt-5">
-            <Trending top={1} />
-            <Trending top={2} />
-            <Trending top={3} />
-            <Trending top={4} />
-            <Trending top={5} />
-            <Trending top={6} />
+            {trendingLoading ? <Loading /> : trendingBlogs ? trendingBlogs.getTrendingBlogs.map((trending: any, key: number) => {
+              return <Trending key={trending.id} top={key + 1} content={trending} />
+            }) : <p>No trending blogs!</p> }
           </div>
         </div>
       </div>

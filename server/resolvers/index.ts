@@ -88,6 +88,20 @@ export default {
           },
         });
       }
+    },
+    getTrendingBlogs: async (parent: any, args: any, context: any, info: any) => {
+      const TRENDING_VIEWS = 10;
+
+      try {
+        const trendingBlogs = await Blog.find({ reader_count: { $gt: TRENDING_VIEWS } }).populate("user").sort({ reader_count: -1 });
+        return trendingBlogs;
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {

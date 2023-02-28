@@ -137,3 +137,26 @@ export const GET_BLOG = gql`
     }
   }
 `;
+
+export const GET_TRENDING_BLOGS = gql`
+  query {
+    getTrendingBlogs {
+      id
+      user {
+        id
+        username
+        email
+        avatar
+        followers
+        description
+      }
+      title
+      description
+      thumbnail
+      content
+      category
+      read_duration
+      createdAt 
+    }
+  }
+`;
