@@ -160,3 +160,13 @@ export const GET_TRENDING_BLOGS = gql`
     }
   }
 `;
+
+export const GET_ALL_CATEGORIES = gql`
+  query {
+    getAllCategories {
+      id
+      category_name
+      createdAt
+    }
+  }
+`;

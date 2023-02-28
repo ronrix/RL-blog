@@ -8,12 +8,14 @@ import Loading from '../components/Loading'
 import SuggestionsFooter from '../components/Suggestions/SuggestionsFooter'
 import Trending from '../components/Trending'
 import useGetAllBlogs from '../hooks/useGetAllBlogs'
+import useGetAllCategories from '../hooks/useGetAllCategories'
 import useGetTrendingBlogs from '../hooks/useGetTrendingBlogs'
 import { toggleAuthModal } from '../state/slice/authModalSlice'
 
 export default function Home() {
   const [blogs, loading] = useGetAllBlogs();
   const {trendingBlogs, trendingLoading} = useGetTrendingBlogs();
+  const {categories, categoryLoading} = useGetAllCategories();
   const dispatch = useDispatch();
 
   return (
@@ -64,15 +66,9 @@ export default function Home() {
           {/* categories */}
           <div>
             <div className='flex flex-wrap gap-3 mt-5'>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Programming</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Data Science</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Technology</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Self improvement</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Writing</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Relationships</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Machine learning</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Prodcutivity</Link>
-              <Link to="/category/" className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>Politics</Link>
+              {categoryLoading ? <Loading /> : categories ? categories.getAllCategories.map((category: any) => {
+                return <Link key={category.id} to={`/category/${category.category_name}`} className='px-4 py-2 text-gray-500 border rounded font-[Manrope] text-sm'>{category.category_name}</Link>
+              }) : <p>No categories!</p>}
             </div>
             <SuggestionsFooter />
           </div>

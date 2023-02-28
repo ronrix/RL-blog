@@ -35,6 +35,7 @@ export default `#graphql
   }
 
   type Category {
+    id: ID!
     category_name: String!
     createdAt: GraphQLDateTime
   }
