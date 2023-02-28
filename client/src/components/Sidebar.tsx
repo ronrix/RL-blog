@@ -26,12 +26,12 @@ export default function Sidebar(props: Props) {
         {/* user info */}
         <div className="flex-1">
           <h3 className="text-lg font-bold">{username}</h3>
-          <p className="text-lg text-gray-700 font-['Manrope'] font-medium">
+          <p className="text-lg text-gray-700 font-['Manrope'] font-medium mb-0">
             {followers.length} followers
           </p>
         </div>
 
-        <p className="font-['Manrope'] text-base text-gray-700 mt-5">{description}</p>
+        <p className="font-['Manrope'] text-base text-gray-700 m-0 mt-2">{description}</p>
 
         {/* suggestions */}
         <h4 className="font-bold mt-5">More from RL</h4>
