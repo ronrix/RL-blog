@@ -3,6 +3,7 @@ import Blog from "../models/Blog";
 import User from "../models/User";
 import { BlogType, UserType } from "../types";
 import jwt from "jsonwebtoken";
+import Category from "../models/Category";
 
 export default {
   Query: {
@@ -136,8 +137,22 @@ export default {
       try {
         const blog = new Blog(args);
         await blog.save();
+
+        // store the new category to DB
+        // if category already exists in DB, then ignore
+        const categoryExists = await Category.findOne({category_name: args.category});
+        console.log(categoryExists);
+        if(!categoryExists) {
+          const category = new Category({ category_name: args.category });
+          await category.save();
+        }
+
         return blog.populate("user");
       } catch(err: any) {
+        console.log("ERROR:", err);
+        if(err) {
+          console.log("yes error.");
+        }
         return new GraphQLError("Something went wrong!", {
           extensions: {
             code: "INTERNAL_SERVER_ERROR"
