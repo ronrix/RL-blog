@@ -1,4 +1,5 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard'
 import Footer from '../components/Footer'
@@ -7,9 +8,11 @@ import Loading from '../components/Loading'
 import SuggestionsFooter from '../components/Suggestions/SuggestionsFooter'
 import Trending from '../components/Trending'
 import useGetAllBlogs from '../hooks/useGetAllBlogs'
+import { toggleAuthModal } from '../state/slice/authModalSlice'
 
 export default function Home() {
   const [blogs, loading] = useGetAllBlogs();
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -24,7 +27,7 @@ export default function Home() {
           <h1 className='font-["labrada"] text-6xl sm:text-8xl'>Stay curious.</h1>
           <p className="w-[50%] md:w-[30%] my-8 leading-6">Discover stories, thinking, and expertise from writers on any topic.</p>
 
-          <Link to="/somewhere" className="bg-black text-white font-bold py-3 px-10 rounded-full text-xl font-['Manrope']">Start reading</Link>
+          <button onClick={() => dispatch(toggleAuthModal("signup"))} className="bg-black text-white font-bold py-3 px-10 rounded-full text-xl font-['Manrope']">Start reading</button>
         </div>
       </div>
 
