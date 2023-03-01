@@ -115,8 +115,8 @@ export const GET_BLOGS = gql`
 `;
 
 export const GET_BLOG = gql`
-  query($id: ID!) {
-    getBlog(id: $id) {
+  query($id: ID!, $title: String!) {
+    getBlog(id: $id, title: $title) {
       id
       user {
         id

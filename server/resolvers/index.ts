@@ -94,7 +94,7 @@ export default {
     },
     getBlog: async (parent: any, args: any, context: any, info: any) => {
       try {
-        const blog = await Blog.findById(args.id).populate("user");
+        const blog = await Blog.findOne({ _id: args.id, title: args.title }).populate("user");
         return blog;
       } catch(err) {
         return new GraphQLError('Something went wrong!', {
