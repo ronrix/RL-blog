@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import './index.css'
-import Blog from './pages/Blog';
 import Search from './pages/Search';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 
@@ -16,6 +15,7 @@ import Home from './pages/Home';
 
 import { authCookie  } from "./state/store";
 import CompleteProfile from './pages/CompleteProfile';
+import BlogPage from './pages/Blog';
 
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Blog />
+    element: <BlogPage />
   },
 ]);
 

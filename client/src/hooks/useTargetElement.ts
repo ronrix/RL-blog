@@ -21,7 +21,7 @@ export default function useTargetElement(footerRef: RefObject<HTMLDivElement>, r
     return () => {
       observer.disconnect();
     };
-  }, [footerRef, reload]);
+  }, [reload]);
 
   return show;
 }

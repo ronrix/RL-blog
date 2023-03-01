@@ -204,3 +204,12 @@ export const UNFOLLOW = gql`
     }
   }
 `;
+
+export const READ_COUNT = gql`
+  query($blogId: ID!) {
+    readCount(blogId: $blogId) {
+      msg
+      status
+    }
+  }
+`;
