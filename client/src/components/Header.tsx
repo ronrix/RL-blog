@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import useRetrieveUser from '../hooks/useRetrieve';
 import AuthModal from './AuthModal';
@@ -10,13 +10,14 @@ import Logo from './Logo';
 export default function Header() {
   const authModal = useSelector((state: any) => state.authModal.mode);
   const userData = useSelector((state: any) => state.user?.value);
+  const params = useParams();
 
   useRetrieveUser();
 
   return (
     <>
     {(authModal.signin || authModal.signup) && <AuthModal mode={authModal} />}
-      <div className="p-2 md:p-5 flex items-center justify-between bg-transparent">
+      <div className={`p-2 md:p-5 flex items-center justify-between bg-transparent ${Object.keys(params).length ? 'border border-t-0 border-x-0' : 'border-none'}`}>
           <div className="flex items-center">
               <Logo />
             
