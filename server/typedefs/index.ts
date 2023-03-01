@@ -55,8 +55,8 @@ export default `#graphql
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, avatar: String!, description: String!): UserType
-    completeProfile(id: ID!, links: JSON, bookmarks: [String!]): UserType
+    addUser(username: String!, email: String!, password: String!, avatar: String!): UserType
+    completeProfile(username: String!, description: String!, links: JSON!): UserType
     createBlog(user: ID!, title: String!, description: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
   }
 `;

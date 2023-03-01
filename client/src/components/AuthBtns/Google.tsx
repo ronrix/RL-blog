@@ -5,6 +5,7 @@ import { addUserState } from "../../state/slice/userSlice";
 import { useState } from "react";
 import Toaster from "../Toaster";
 import { ADD_USER, LOGIN } from "../../queries";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   mode: { signup: Boolean; signin: Boolean };
@@ -13,6 +14,7 @@ type Props = {
 export default function Google({ mode }: Props) {
   const dispatch = useDispatch();
   const [err, setErr] = useState<{value: string; name: string}>();
+  const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: async (credential) => {
@@ -26,7 +28,7 @@ export default function Google({ mode }: Props) {
 
       // add the user
       if(mode.signup) {
-        const { data, errors } = await addUser({variables: { username: names[0].displayName, email: emailAddresses[0].value, password: emailAddresses[0].metadata.source.id, avatar: photos[0].url, description: "This is sample description" }});
+        const { data, errors } = await addUser({variables: { username: names[0].displayName, email: emailAddresses[0].value, password: emailAddresses[0].metadata.source.id, avatar: photos[0].url }});
         if(errors) {
           // TODO: display notification message for error
           console.log(errors);
@@ -35,8 +37,7 @@ export default function Google({ mode }: Props) {
         }
         // add the data to the user after creating the user
         dispatch(addUserState(data.addUser));
-
-        window.location.href = "/u";
+        navigate("/complete-profile");
         return;
       }
       // login the user

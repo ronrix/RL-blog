@@ -13,10 +13,11 @@ export type BlogType = {
 export type UserType = {
   id: ObjectId;
   username: String;
+  avatar: String;
   email: String;
   password: String,
-  description: String;
-  followers: [String];
-  links: [String];
-  bookmarks: [String];
+  description?: String;
+  followers?: [String];
+  links?: [String];
+  bookmarks?: [String];
 }

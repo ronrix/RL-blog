@@ -24,11 +24,14 @@ export const authModalSlice = createSlice({
       // signin
       state.mode.signin = !state.mode.signin;
       state.mode.signup = false;
+    },
+    closeModal: (state) => {
+      state.mode = { signup: false, signin: false };
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { toggleAuthModal } = authModalSlice.actions
+export const { toggleAuthModal, closeModal } = authModalSlice.actions
 
 export default authModalSlice.reducer

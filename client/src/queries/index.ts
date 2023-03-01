@@ -25,13 +25,12 @@ export const LOGOUT = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation($username: String!, $email: String!, $password: String!, $avatar: String!, $description: String!) {
-    addUser(username: $username, email: $email, password: $password, avatar: $avatar, description: $description) {
+  mutation($username: String!, $email: String!, $password: String!, $avatar: String!) {
+    addUser(username: $username, email: $email, password: $password, avatar: $avatar) {
       id
       email
       username
       avatar
-      description
       createdAt
       updatedAt
     }
@@ -167,6 +166,21 @@ export const GET_ALL_CATEGORIES = gql`
       id
       category_name
       createdAt
+    }
+  }
+`;
+
+export const COMPLETE_USER_PROFILE = gql`
+ mutation($username: String!, $description: String!, $links: JSON!) {
+    completeProfile(username: $username, description: $description, links: $links) {
+      id
+      email
+      username
+      avatar
+      description
+      links
+      createdAt
+      updatedAt
     }
   }
 `;

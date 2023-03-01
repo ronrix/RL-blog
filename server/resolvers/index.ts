@@ -4,6 +4,7 @@ import User from "../models/User";
 import { BlogType, UserType } from "../types";
 import jwt from "jsonwebtoken";
 import Category from "../models/Category";
+import bcrypt from "bcrypt";
 
 export default {
   Query: {
@@ -120,15 +121,16 @@ export default {
   Mutation: {
     addUser: async (parent: any, args: UserType, context: any, info: any) => {
       try {
-        const user = new User(args); 
+        const hashed_password = await bcrypt.hash(String(args.password), 10);
+        const user = new User({...args, password: hashed_password }); 
         await user.save();
 
         // create a token with the user
-        const token = await jwt.sign({id: user.id, usernmae: user.username, email: user.email}, process.env.SECRET_KEY, { expiresIn: "10h" });
+        const token = await jwt.sign({id: user.id, username: user.username, email: user.email}, process.env.SECRET_KEY, { expiresIn: "10h" });
         context.res.cookie("token", token, { httpOnly: true });
         context.res.cookie("c_user", user.id);
 
-        return { id: 1, username: user.username, email: user.email, description: user.description };
+        return user;
       } catch(err: any) {
         if(err.code === 11000) {
           return new GraphQLError('Invalid, user already exists', {
@@ -148,7 +150,9 @@ export default {
     completeProfile: async (parent: any, args: UserType, context: any, info: any) => {
       try {
         const userId = context.req.cookies["c_user"];
-        const user = await User.updateOne({ id: userId }, { username: args.username, description: args.description, links: args.links });
+        const user = await User.findOneAndUpdate({ _id: userId }, { username: args.username, description: args.description, links: args.links }, { returnDocument: "after" }).exec();
+
+        return user;
       } catch (err: any) {
         return new GraphQLError('Something went wrong!', {
           extensions: {
