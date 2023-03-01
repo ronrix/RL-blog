@@ -19,7 +19,10 @@ export const BlogSchema = new mongoose.Schema({
     require: true,
   },
   reader_count: {
-    type: Number,
+    type: [mongoose.Schema.Types.ObjectId],
+    unique: true,
+    ref: "User",
+    default: []
   },
   content: String,
   category: String,

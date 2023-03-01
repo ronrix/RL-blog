@@ -53,6 +53,7 @@ export default `#graphql
     getTrendingBlogs: [BlogType]
     logout: Response
     getAllCategories: [Category]
+    readCount(blogId: ID!): Response
   }
 
   type Mutation {

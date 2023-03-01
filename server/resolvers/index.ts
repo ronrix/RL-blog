@@ -129,6 +129,20 @@ export default {
           },
         });
       }
+    },
+    readCount: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        await Blog.findByIdAndUpdate({ _id: args.blogId }, { $addToSet: { reader_count: userId }});
+
+        return { msg: "success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
   },
   Mutation: {
@@ -179,9 +193,9 @@ export default {
       try {
         const userId = context.req.cookies["c_user"];
         // put the id of the blog user to the authenticated user following table
-        await User.findOneAndUpdate({ _id: userId }, { $push: { following: args.id } }).exec();
+        await User.findOneAndUpdate({ _id: userId }, { $addToSet: { following: args.id } }).exec();
         // put the id of the authenticated user to the followers table of the blog user
-        await User.findOneAndUpdate({_id: args.id }, { $push: { followers: userId } }).exec();
+        await User.findOneAndUpdate({_id: args.id }, { $addToSet: { followers: userId } }).exec();
 
         return { msg: "follow success", status: 201 };
       } catch (err: any) {

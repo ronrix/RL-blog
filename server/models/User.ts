@@ -16,11 +16,13 @@ export const UserSchema = new mongoose.Schema({
   following: {
     type: [mongoose.Schema.Types.ObjectId],
     unique: true,
+    ref: "User",
     default: []
   },
   followers: {
     type: [mongoose.Schema.Types.ObjectId],
     unique: true,
+    ref: "User",
     default: []
   },
   links: {
@@ -29,6 +31,7 @@ export const UserSchema = new mongoose.Schema({
   },
   bookmarks: {
     type: [mongoose.Schema.Types.ObjectId],
+    ref: "Blog",
     unique: true,
     default: []
   },
