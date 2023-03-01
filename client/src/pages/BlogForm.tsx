@@ -8,11 +8,12 @@ import Info from '../components/Info';
 import { ADD_BLOG } from '../queries';
 import Toaster from '../components/Toaster';
 import { authCookie } from '../state/store';
+import useGetAllCategories from '../hooks/useGetAllCategories';
 
  const ErrorSchema = Yup.object().shape({
    title: Yup.string().required('Required'),
    thumbnail: Yup.string().required('Required'),
-   read_duration: Yup.number().required('Required'),
+   read_duration: Yup.string().required('Required'),
    content: Yup.string().required("Required"),
  });
 
@@ -20,6 +21,7 @@ export default function BlogForm() {
   const [show, setShow] = useState<boolean>(false);
   const [isNewCategory, setIsNewCategory] = useState<boolean>(false);
   const [resMsg, setResMsg] = useState<{name: string; value: string}>();
+  const {categories} = useGetAllCategories();
   
   const [createBlog] = useMutation(ADD_BLOG);
 
@@ -88,8 +90,9 @@ export default function BlogForm() {
             <br />
             <select name="category" onChange={formik.handleChange} value={formik.values.category} className='bg-slate-50 outline-none p-1 px-2 shadow-inner'>
               <option value="none">none</option>
-              <option value="javascript" className="">Javascript</option>
-              <option value="python">Python</option>
+              {categories?.getAllCategories.map((category: any) => {
+                return <option value={category.category_name}>{category.category_name}</option>
+              })}
             </select> 
             <p className="text-gray-500 text-xs font-['Manrope']">Specify the category of your content</p>
           </label>
