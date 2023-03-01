@@ -22,7 +22,7 @@ export default function Trending(props: Props) {
             {content.user.username}
           </h4>
 
-          <h3 className="text-lg font-[800] m-0 p-0">{content.title}</h3>
+          <h3 className="text-lg font-[800] m-0 p-0 capitalize">{content.title}</h3>
           <p className='text-gray-400 text-xs mt-3 font-["Manrope"]'>{moment(content.createdAt).format("MMM Do")} <span className="mx-2">·</span> {content.read_duration} min read</p>
         </div>
       </div>
