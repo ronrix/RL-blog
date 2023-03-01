@@ -35,7 +35,7 @@ export default function BlogForm() {
       content: '',
     },
     onSubmit: async (values) => {
-      const { data, errors } = await createBlog({ variables: { user: authCookie, ...values } });
+      const { data, errors } = await createBlog({ variables: { user: authCookie, ...values, title: values.title.toLowerCase() } });
       if(errors) {
         setResMsg({name: errors[0].name, value: errors[0].message});
         return;
