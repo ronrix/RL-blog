@@ -21,8 +21,8 @@ export default function BlogHeader(props: Props) {
           </div>
           {/* usre info */}
           <div className="flex-1 ml-5">
-              <h3 className="text-lg md:text-2xl font-medium">{name}</h3>
-              <p className="text-md md:text-lg text-gray-700">{moment(date).format("MMM Do")} . {duration} min read </p>
+              <h3 className="text-lg md:text-2xl font-bold capitalize">{name}</h3>
+              <p className="text-md md:text-lg text-gray-700 font-[Manrope]">{moment(date).format("MMM Do")} . {duration} min read </p>
           </div>
         </div>
         {/* links */}
