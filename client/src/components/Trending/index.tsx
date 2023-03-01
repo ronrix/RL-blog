@@ -17,7 +17,7 @@ export default function Trending(props: Props) {
       <div className='flex'>
         <h3 className='mr-5 text-lg font-[800] text-gray-400'>0{top.toString()}</h3>
         <div className='flex flex-col items-start justify-start py-3'>
-          <h4 className="flex items-center m-0 p-0 font-[600] text-xs">
+          <h4 className="flex items-center m-0 p-0 font-[600] text-xs capitalize">
             <img src={content.user.avatar} alt="avatar" className="w-[20px] rounded-full my-0 mr-2" />
             {content.user.username}
           </h4>

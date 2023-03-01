@@ -57,7 +57,7 @@ export default function Header() {
                     <Link to="/u/write-blog" className='text-black'>
                         <i className="fa-regular fa-pen-to-square text-lg mr-3 hover:text-gray-500 cursor-pointer"></i>
                     </Link>
-                    <h3 className='hidden sm:block m-0 p-0'>Welcome, {userData.username}</h3>
+                    <h3 className='hidden sm:block m-0 p-0 capitalize'>Welcome, {userData.username.split(" ")[0]}</h3>
                     <Avatar imgSrc={userData?.avatar} />
                 </>
                 ) : (
