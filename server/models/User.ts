@@ -13,8 +13,14 @@ export const UserSchema = new mongoose.Schema({
     type: String,
   },
   description: String,
+  following: {
+    type: [mongoose.Schema.Types.ObjectId],
+    unique: true,
+    default: []
+  },
   followers: {
     type: [mongoose.Schema.Types.ObjectId],
+    unique: true,
     default: []
   },
   links: {
@@ -23,6 +29,7 @@ export const UserSchema = new mongoose.Schema({
   },
   bookmarks: {
     type: [mongoose.Schema.Types.ObjectId],
+    unique: true,
     default: []
   },
   password: String,

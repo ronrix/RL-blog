@@ -17,6 +17,7 @@ export type UserType = {
   email: String;
   password: String,
   description?: String;
+  following?: [ObjectId];
   followers?: [String];
   links?: [String];
   bookmarks?: [String];

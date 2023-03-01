@@ -175,6 +175,43 @@ export default {
       }
     },
 
+    follow: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        // put the id of the blog user to the authenticated user following table
+        await User.findOneAndUpdate({ _id: userId }, { $push: { following: args.id } }).exec();
+        // put the id of the authenticated user to the followers table of the blog user
+        await User.findOneAndUpdate({_id: args.id }, { $push: { followers: userId } }).exec();
+
+        return { msg: "follow success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+
+   unfollow: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        // removed the id of the blog user to the authenticated user following table
+        await User.findOneAndUpdate({ _id: userId }, { $pull: { following: args.id } }).exec();
+        // remove the id of the authenticated user to the followers table of the blog user
+        await User.findOneAndUpdate({_id: args.id }, { $pull: { followers: userId } }).exec();
+
+        return { msg: "unfollow success", status: 201 };
+      } catch (err: any) {
+        console.log(err);
+        return new GraphQLError('Something went wrong!', {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+
     createBlog: async (parent: any, args: BlogType, context: any, info: any) => {
       try {
         const blog = new Blog(args);

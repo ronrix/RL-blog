@@ -10,6 +10,7 @@ export default `#graphql
     password: String!
     avatar: String!
     description: String!
+    following: [String!]
     followers: [String!]
     links: JSON!
     bookmarks: [String!]
@@ -58,5 +59,7 @@ export default `#graphql
     addUser(username: String!, email: String!, password: String!, avatar: String!): UserType
     completeProfile(username: String!, description: String!, links: JSON!): UserType
     createBlog(user: ID!, title: String!, description: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
+    follow(id: ID!): Response
+    unfollow(id: ID!): Response
   }
 `;

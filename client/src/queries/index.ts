@@ -184,3 +184,23 @@ export const COMPLETE_USER_PROFILE = gql`
     }
   }
 `;
+
+// the id here is the blog users id and not the logged in user
+export const FOLLOW = gql`
+  mutation($id: ID!) { 
+    follow(id: $id) {
+      msg
+      status
+    }
+  }
+`;
+
+// the id here is the blog users id and not the logged in user
+export const UNFOLLOW = gql`
+  mutation($id: ID!) {
+    unfollow(id: $id) {
+      msg
+      status
+    }
+  }
+`;
