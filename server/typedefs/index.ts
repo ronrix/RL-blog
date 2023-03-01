@@ -48,7 +48,7 @@ export default `#graphql
     getUserBlogs(user_id: ID!): [BlogType]
     getAllBlogs: [BlogType]
     getBlog(id: ID!): BlogType
-    login(username: String!, email: String!, uid: String!): UserType
+    login(email: String!, uid: String!): UserType
     getTrendingBlogs: [BlogType]
     logout: Response
     getAllCategories: [Category]

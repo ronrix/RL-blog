@@ -41,7 +41,7 @@ export default function Google({ mode }: Props) {
         return;
       }
       // login the user
-      const { data, error } = await getUser({ variables: { username: names[0].displayName, email: emailAddresses[0].value, uid: emailAddresses[0].metadata.source.id }});
+      const { data, error } = await getUser({ variables: { email: emailAddresses[0].value, uid: emailAddresses[0].metadata.source.id }});
       if(error) {
         // TODO: display notification message for error
         setErr({ name: error.name, value: error.message });

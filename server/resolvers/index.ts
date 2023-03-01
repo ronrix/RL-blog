@@ -19,7 +19,19 @@ export default {
     },
     login: async (parents: any, args: any, context: any, info: any) => {
       try {
-        const user: any = await User.findOne({ username: args.username, email: args.email, password: args.uid });
+        const user: any = await User.findOne({ email: args.email });
+
+        // check if the password provided is valid
+        const valid = await bcrypt.compare(args.uid, user.password);
+        if(!valid) {
+          return new GraphQLError("Invalid email or password", {
+            extensions: {
+              code: "USER_NOT_FOUND"
+            }
+          });
+        }
+
+        // check if there is user found in DB
         if(!user) {
           return new GraphQLError("User not found", {
             extensions: {
@@ -34,6 +46,7 @@ export default {
 
         return user;
       } catch(err) {
+        console.log(err);
         return new GraphQLError('Something went wrong!', {
           extensions: {
             code: 'INTERNAL_SERVER_ERROR',
