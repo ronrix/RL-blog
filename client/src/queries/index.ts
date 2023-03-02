@@ -123,6 +123,7 @@ export const GET_BLOG = gql`
         username
         email
         avatar
+        links
         followers
         description
       }

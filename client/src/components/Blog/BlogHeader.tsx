@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react'
+import React, { useState } from 'react'
 import Abbr from '../Abbr'
 
 type Props = {
@@ -7,10 +7,23 @@ type Props = {
   name: string;
   date: string;
   duration: string;
+  links: any;
 }
 
 export default function BlogHeader(props: Props) {
-  const { avatar, name, date, duration } = props;
+  const { avatar, name, date, duration, links } = props;
+  const [isCopied, setIsCopied] = useState<boolean>(false);
+
+  function copy(){
+    setIsCopied(true);
+
+    // this will turn back the text 'copied' to 'copy'. default
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 2000);
+
+    navigator.clipboard.writeText(window.location.href);
+  }
 
   return (
     <div className="flex flex-col sm:flex-row md:items-center justify-between mb-10">
@@ -33,12 +46,12 @@ export default function BlogHeader(props: Props) {
             <span className="pl-5">Save</span>
            </div>
 
-           <i className="fa-brands fa-twitter text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
-           <i className="fa-brands fa-facebook text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
-           <i className="fa-brands fa-linkedin text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i> 
+           <a target={"_blank"} href={links.twitter}><i className="fa-brands fa-twitter text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i></a>
+           <a target={"_blank"} href={links.fb}><i className="fa-brands fa-facebook text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i></a>
+           <a target={"_blank"} href={links.linkedin}><i className="fa-brands fa-linkedin text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer"></i></a>
            <div className='relative group'>
-            <i className="fa-solid fa-link text-gray-500 text-lg sm:text-2xl group-hover:text-black cursor-pointer"></i>
-            <Abbr text="Copy" />
+            <i onClick={copy} className="fa-solid fa-link text-gray-500 text-lg sm:text-2xl group-hover:text-black cursor-pointer"></i>
+            <Abbr text={!isCopied ? 'Copy' : "Copied"} />
            </div>
            <i className="fa-regular fa-bookmark text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer hidden sm:block"></i>
         </div>
