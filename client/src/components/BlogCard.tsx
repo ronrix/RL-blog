@@ -29,7 +29,9 @@ export default function BlogCard(props: Props) {
             <i className="fa-regular fa-bookmark hover:text-gray-600"></i>
           </div>
         </div>
-        <img alt="" className={`ut w-full sm:w-[200px] h-[134px] my-0 order-1 sm:order-2`} src={thumbnail} loading="lazy" role="presentation"></img>
+        <div className="w-full sm:w-[200px] overflow-hidden order-1 sm:order-2">
+          <img alt="" className={`ut w-full h-[134px] my-0`} src={thumbnail} loading="lazy" role="presentation"></img>
+        </div>
       </div>
     </Link>
   )
