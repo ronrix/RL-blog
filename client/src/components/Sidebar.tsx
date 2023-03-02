@@ -28,6 +28,7 @@ export default function Sidebar(props: Props) {
     // if no user, display the login modal
     if(!Cookies.get("c_user")) {
       dispatch(toggleAuthModal("signin"));
+      return;
     }
 
     // else: if there is a user, check if they haven't followed the user yet 
