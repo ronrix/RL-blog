@@ -16,6 +16,7 @@ import Home from './pages/Home';
 import { authCookie  } from "./state/store";
 import CompleteProfile from './pages/CompleteProfile';
 import BlogPage from './pages/Blog';
+import About from './pages/About';
 
 export const client = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/search",
     element: <Search />
+  },
+  {
+    path: "/about",
+    element: <About />
   },
   {
     path: "/complete-profile",
