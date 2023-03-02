@@ -22,11 +22,17 @@ export default function FloatingBlogFooter({ show, blogId, likes }: Props) {
     const userId: string = Cookies.get("c_user") || "";
     const [isLiked, setIsLiked] = useState<boolean | undefined>(() => likes?.includes(userId));
   
-    function handleClickLike() {
+    async function handleClickLike() {
+        const isAuth: boolean = await handleLike(dispatch, like);
+        // if not auth, just return
+        if(!isAuth) {
+            return;
+        }
+
+        // if authenticated it will call like and unlike function
         if(!isLiked) {
             setIsLiked(true);
             setLikesCount((prev: any) => prev + 1);
-            handleLike(dispatch, like);
             return;
         }
 

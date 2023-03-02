@@ -37,16 +37,23 @@ export default function BlogHeader(props: Props) {
     navigator.clipboard.writeText(window.location.href);
   }
 
-  function handleSaveBookmark() {
-    console.log("save bookmark");
+  async function handleSaveBookmark() {
+    const isAuth = await handleSaveToBookmark(dispatch, saveBookmark);
+    // if not auth, just return
+    if(!isAuth) {
+      return;
+    }
     setIsSaveBookmark(true);
-    handleSaveToBookmark(dispatch, saveBookmark);
   }
 
-  function handleUnSaveBookmark() {
-    console.log("unsave bookmark");
+  async function handleUnSaveBookmark() {
+    const isAuth = await handleSaveToBookmark(dispatch, unSaveBookmark);
+    // if not auth, just return
+    if(!isAuth) {
+      return;
+    }
+
     setIsSaveBookmark(false);
-    handleSaveToBookmark(dispatch, unSaveBookmark);
   }
 
   return (
