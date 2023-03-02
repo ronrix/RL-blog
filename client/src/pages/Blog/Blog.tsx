@@ -1,14 +1,11 @@
 import React, { useRef, useState } from 'react'
 import BlogContent from '../../components/Blog/BlogContent'
 import BlogFooter from '../../components/Blog/BlogFooter'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
 import Sidebar from '../../components/Sidebar'
 import FloatingBlogFooter from '../../components/Blog/FloatingBlogFooter'
 import BlogHeader from '../../components/Blog/BlogHeader'
 import useTargetElement from '../../hooks/useTargetElement'
 import Loading from '../../components/Loading'
-import useGetBlog from '../../hooks/useGetBlog'
 import NotFound from '../../components/404'
 
 type Props = {
@@ -45,7 +42,7 @@ export default function Blog(props: Props) {
             <BlogContent content={data.getBlog.content} />
             <BlogFooter footerRef={footerRef} reload={renderFullReload} />
 
-            <FloatingBlogFooter show={show}  />
+            <FloatingBlogFooter likes={data.getBlog?.likes} blogId={data.getBlog.id} show={show}  />
           </div>
 
           <Sidebar user={data.getBlog.user} />

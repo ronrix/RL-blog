@@ -133,7 +133,37 @@ export default {
     readCount: async (parent: any, args: any, context: any, info: any) => {
       try {
         const userId = context.req.cookies["c_user"];
-        await Blog.findByIdAndUpdate({ _id: args.blogId }, { $addToSet: { reader_count: userId }});
+        await Blog.findByIdAndUpdate({ _id: args.blogId }, { $addToSet: { reader_count: userId }}).exec();
+
+        return { msg: "success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+
+    like: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        await Blog.findByIdAndUpdate(args.blogId, { $addToSet: { likes: userId }}).exec();
+        
+        return { msg: "success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+    
+    saveToBookmark: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        await User.findByIdAndUpdate(userId, { $addToSet: { bookmarks: args.blogId } }).exec();
 
         return { msg: "success", status: 201 };
       } catch (err: any) {

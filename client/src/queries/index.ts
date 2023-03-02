@@ -130,6 +130,7 @@ export const GET_BLOG = gql`
       title
       description
       thumbnail
+      likes
       content
       category
       read_duration
@@ -209,6 +210,15 @@ export const UNFOLLOW = gql`
 export const READ_COUNT = gql`
   query($blogId: ID!) {
     readCount(blogId: $blogId) {
+      msg
+      status
+    }
+  }
+`;
+
+export const LIKE = gql`
+  query($blogId: ID!) {
+    like(blogId: $blogId) {
       msg
       status
     }

@@ -18,6 +18,12 @@ export const BlogSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  likes: {
+    type: [mongoose.Schema.Types.ObjectId],
+    unique: true,
+    ref: "User",
+    default: []
+  },
   reader_count: {
     type: [mongoose.Schema.Types.ObjectId],
     unique: true,
