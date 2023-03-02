@@ -8,14 +8,16 @@ import Cookies from 'js-cookie';
 type Props = {
     show: Boolean;
     blogId: string;
-    likes?: [];
+    likes?: [String];
 }
 
 export default function FloatingBlogFooter({ show, blogId, likes }: Props) {
     const like = useLike(blogId);
     const dispatch = useDispatch();
     const [likesCount ,setLikesCount] = useState<number | undefined>(likes?.length);
-    const [isLiked, setIsLiked] = useState<boolean | undefined>(() => likes?.includes(Cookies.get("c_user")));
+
+    const userId: string = Cookies.get("c_user") || "";
+    const [isLiked, setIsLiked] = useState<boolean | undefined>(() => likes?.includes(userId));
   
     function handleClickLike() {
         if(!isLiked) {
