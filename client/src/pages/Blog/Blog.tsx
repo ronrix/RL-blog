@@ -36,7 +36,7 @@ export default function Blog(props: Props) {
         </div>)  : (
         <>
           <div className="flex-1 p-5 md:p-20  border border-r-gray-200 border-t-transparent border-l-transparent border-b-transparent ">
-            <BlogHeader links={data.getBlog.user.links} duration={data.getBlog.read_duration} avatar={data.getBlog.user.avatar} date={data.getBlog.createdAt} name={data.getBlog.user.username} />
+            <BlogHeader id={data.getBlog.id} links={data.getBlog.user.links} duration={data.getBlog.read_duration} avatar={data.getBlog.user.avatar} date={data.getBlog.createdAt} name={data.getBlog.user.username} />
             <h1 className="text-5xl font-bold capitalize">{data.getBlog.title}</h1>
             <h2 className="text-base font-bold">{data.getBlog.description}</h2>
             <BlogContent content={data.getBlog.content} />

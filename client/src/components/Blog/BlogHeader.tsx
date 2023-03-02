@@ -1,5 +1,9 @@
+import { useLazyQuery } from '@apollo/client';
 import moment from 'moment';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { SAVE_BOOKMARK, UNSAVE_BOOKMARK } from '../../queries';
+import { handleSaveToBookmark } from '../../utility/handleSaveToBookmark';
 import Abbr from '../Abbr'
 
 type Props = {
@@ -8,11 +12,19 @@ type Props = {
   date: string;
   duration: string;
   links: any;
+  id: string;
 }
 
 export default function BlogHeader(props: Props) {
-  const { avatar, name, date, duration, links } = props;
+  const { avatar, name, date, duration, links, id } = props;
   const [isCopied, setIsCopied] = useState<boolean>(false);
+
+  const user = useSelector((state: any) => state.user.value);
+  const [isSaveBookmark, setIsSaveBookmark] = useState<boolean>(() => user?.bookmarks?.includes(id));
+
+  const [saveBookmark] = useLazyQuery(SAVE_BOOKMARK, { variables: { blogId: id }});
+  const [unSaveBookmark] = useLazyQuery(UNSAVE_BOOKMARK, { variables: { blogId: id }});
+  const dispatch = useDispatch();
 
   function copy(){
     setIsCopied(true);
@@ -23,6 +35,18 @@ export default function BlogHeader(props: Props) {
     }, 2000);
 
     navigator.clipboard.writeText(window.location.href);
+  }
+
+  function handleSaveBookmark() {
+    console.log("save bookmark");
+    setIsSaveBookmark(true);
+    handleSaveToBookmark(dispatch, saveBookmark);
+  }
+
+  function handleUnSaveBookmark() {
+    console.log("unsave bookmark");
+    setIsSaveBookmark(false);
+    handleSaveToBookmark(dispatch, unSaveBookmark);
   }
 
   return (
@@ -53,7 +77,14 @@ export default function BlogHeader(props: Props) {
             <i onClick={copy} className="fa-solid fa-link text-gray-500 text-lg sm:text-2xl group-hover:text-black cursor-pointer"></i>
             <Abbr text={!isCopied ? 'Copy' : "Copied"} />
            </div>
-           <i className="fa-regular fa-bookmark text-lg sm:text-2xl text-gray-500 hover:text-black cursor-pointer hidden sm:block"></i>
+           <div className='relative group'>
+            {isSaveBookmark ?  (
+              <i onClick={handleUnSaveBookmark} className={`fa-solid fa-bookmark text-lg sm:text-2xl text-gray-500 group-hover:text-gray-700 cursor-pointer hidden sm:block`}></i>
+              ): (
+              <i onClick={handleSaveBookmark} className={`fa-regular fa-bookmark text-lg sm:text-2xl text-gray-500 group-hover:text-gray-700 cursor-pointer hidden sm:block`}></i>
+            )}
+            <Abbr text={!saveBookmark ? 'Save' : "Saved"} />
+           </div>
         </div>
     </div>
   )

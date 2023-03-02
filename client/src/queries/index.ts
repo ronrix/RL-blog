@@ -224,3 +224,31 @@ export const LIKE = gql`
     }
   }
 `;
+
+export const UNLIKE = gql`
+  query($blogId: ID!) {
+    unlike(blogId: $blogId) {
+      msg
+      status
+    }
+  }
+`;
+
+export const SAVE_BOOKMARK = gql`
+  query($blogId: ID!) {
+    saveToBookmark(blogId: $blogId) {
+      msg
+      status
+    }
+  }
+`;
+
+
+export const UNSAVE_BOOKMARK = gql`
+  query($blogId: ID!) {
+    unSaveToBookmark(blogId: $blogId) {
+      msg
+      status
+    }
+  }
+`;

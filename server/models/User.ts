@@ -31,8 +31,8 @@ export const UserSchema = new mongoose.Schema({
   },
   bookmarks: {
     type: [mongoose.Schema.Types.ObjectId],
-    ref: "Blog",
     unique: true,
+    ref: "Blog",
     default: []
   },
   password: String,

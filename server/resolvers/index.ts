@@ -159,11 +159,41 @@ export default {
         });
       }
     },
-    
+
+    unlike: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        await Blog.findByIdAndUpdate(args.blogId, { $pull : { likes: userId } }).exec();
+        
+        return { msg: "success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+      
     saveToBookmark: async (parent: any, args: any, context: any, info: any) => {
       try {
         const userId = context.req.cookies["c_user"];
         await User.findByIdAndUpdate(userId, { $addToSet: { bookmarks: args.blogId } }).exec();
+
+        return { msg: "success", status: 201 };
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
+    },
+      
+    unSaveToBookmark: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const userId = context.req.cookies["c_user"];
+        await User.findByIdAndUpdate(userId, { $pull: { bookmarks: args.blogId } }).exec();
 
         return { msg: "success", status: 201 };
       } catch (err: any) {

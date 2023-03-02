@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 
-import useLike from '../../hooks/useLike';
 import { useDispatch } from 'react-redux';
-import { handleLike } from '../../utility/handeLike';
+import { handleLike, handleUnLike } from '../../utility/handeLike';
 import Cookies from 'js-cookie';
+import { useLazyQuery } from '@apollo/client';
+import { LIKE, UNLIKE } from '../../queries';
 
 type Props = {
     show: Boolean;
@@ -12,7 +13,9 @@ type Props = {
 }
 
 export default function FloatingBlogFooter({ show, blogId, likes }: Props) {
-    const like = useLike(blogId);
+    const [like] = useLazyQuery(LIKE, { variables: { blogId }});
+    const [unlike] = useLazyQuery(UNLIKE, { variables: { blogId }});
+
     const dispatch = useDispatch();
     const [likesCount ,setLikesCount] = useState<number | undefined>(likes?.length);
 
@@ -24,7 +27,12 @@ export default function FloatingBlogFooter({ show, blogId, likes }: Props) {
             setIsLiked(true);
             setLikesCount((prev: any) => prev + 1);
             handleLike(dispatch, like);
+            return;
         }
+
+        setIsLiked(false);
+        setLikesCount((prev: any) => prev - 1);
+        handleUnLike(dispatch, unlike);
     }
   
     const render = show && (
