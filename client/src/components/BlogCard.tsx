@@ -17,8 +17,8 @@ export default function BlogCard(props: Props) {
 
   return (
     <Link to={path} onClick={() => setBlogIdToLS(id)} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
-      <div className='flex justify-between gap-3'>
-        <div className="w-[80%] flex flex-col justify-between">
+      <div className='flex justify-between gap-3 flex-col sm:flex-row'>
+        <div className="w-full sm:w-[80%] flex flex-col justify-between order-2 sm:order-1">
           <div>
             <SuggestionsHeader user={user} category={category} />
             <SuggestionsTitle title={title} />
@@ -29,7 +29,7 @@ export default function BlogCard(props: Props) {
             <i className="fa-regular fa-bookmark hover:text-gray-600"></i>
           </div>
         </div>
-        <img alt="" className={`ut w-[200px] h-[134px] my-0`} src={thumbnail} loading="lazy" role="presentation"></img>
+        <img alt="" className={`ut w-full sm:w-[200px] h-[134px] my-0 order-1 sm:order-2`} src={thumbnail} loading="lazy" role="presentation"></img>
       </div>
     </Link>
   )
