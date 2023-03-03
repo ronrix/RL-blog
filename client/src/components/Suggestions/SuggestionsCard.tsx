@@ -23,7 +23,7 @@ export default function SuggestionsCard(props: Props) {
           <SuggestionsHeader user={user} category={category} />
           <SuggestionsTitle title={title} />
         </div>
-        <img alt="" className={`ut w-[150px] my-0`} src={thumbnail} loading="lazy" role="presentation"></img>
+        <img alt="" className={`hidden xl:block ut w-[150px] my-0`} src={thumbnail} loading="lazy" role="presentation"></img>
       </div>
     </a>
   )
