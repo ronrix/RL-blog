@@ -16,7 +16,7 @@ export default function BlogCard(props: Props) {
   const path = title.replace(/ /g, '-').toLowerCase();
 
   return (
-    <Link to={path} onClick={() => setBlogIdToLS(id)} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
+    <Link to={`/${path}`} onClick={() => setBlogIdToLS(id)} className='flex flex-col text-black mt-5 mb-10 cursor-pointer'>
       <div className='flex justify-between gap-3 flex-col sm:flex-row'>
         <div className="w-full sm:w-[80%] flex flex-col justify-between order-2 sm:order-1">
           <div>
