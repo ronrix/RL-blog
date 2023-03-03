@@ -43,6 +43,14 @@ export default `#graphql
     createdAt: GraphQLDateTime
   }
 
+  type Comment {
+    id: ID!
+    blogId: ID!
+    comment: String!
+    createdAt: GraphQLDateTime
+    updatedAt: GraphQLDateTime
+  }
+
   type Query {
     hello: String
     world: String
@@ -59,6 +67,7 @@ export default `#graphql
     unlike(blogId: ID!): Response
     saveToBookmark(blogId: ID!): Response
     unSaveToBookmark(blogId: ID!): Response
+    search(searchQuery: String!): [BlogType]
   }
 
   type Mutation {
@@ -67,5 +76,10 @@ export default `#graphql
     createBlog(user: ID!, title: String!, description: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
     follow(id: ID!): Response
     unfollow(id: ID!): Response
+  }
+
+  type Subscription {
+    commentAdded(id: ID!, blogId: ID!, comment: String!): Comment
+    commentDelete(id: ID!, blogId: ID!, commentId: ID!): Comment
   }
 `;
