@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Logo from '../components/Logo'
 
@@ -58,8 +59,13 @@ export default function About() {
       </div>
     </div>
 
-    <div className='container mx-auto p-5 flex items-center justify-center'>
+    <div className='container mx-auto p-5 flex flex-col items-center justify-center'>
       <Logo />
+      <div className='mt-5'>
+        <Link to="/about" className="text-black font-['Manrope'] mx-5 hover:underline lowercase">About</Link>
+        <Link to="/terms" className="text-black font-['Manrope'] mr-5 hover:underline lowercase">Terms</Link>
+        <Link to="/privacy" className="text-black font-['Manrope'] hover:underline lowercase">Privacy</Link>
+      </div>
     </div>
 
     </div>

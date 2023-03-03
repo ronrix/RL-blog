@@ -55,8 +55,9 @@ export default function Header() {
 
               { Object.keys(userData).length ? (
                 <>
-                    <Link to="/u/write-blog" className='text-black'>
-                        <i className="fa-regular fa-pen-to-square text-lg mr-3 hover:text-gray-500 cursor-pointer"></i>
+                    <Link to="/u/write-blog" className='text-black mr-8 group'>
+                        <i className="fa-regular fa-pen-to-square text-lg mr-3 group-hover:text-gray-500 cursor-pointer"></i>
+                        <span className='font-[Manrope] group-hover:text-gray-500'>Write</span>
                     </Link>
                     <h3 className='hidden sm:block m-0 p-0 capitalize'>Welcome, {userData.username.split(" ")[0]}</h3>
                     <Avatar imgSrc={userData?.avatar} />
