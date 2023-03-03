@@ -3,6 +3,7 @@ import userReducer from "./slice/userSlice";
 import authModalReducer from "./slice/authModalSlice";
 import blogReducer from "./slice/blogSlice";
 import searchReducer from "./slice/searchSlice";
+import responseReducer from "./slice/responseSlice";
 
 import Cookie from "js-cookie";
 
@@ -11,7 +12,8 @@ export default configureStore({
     user: userReducer,
     authModal: authModalReducer,
     blogs: blogReducer,
-    search: searchReducer 
+    search: searchReducer,
+    response: responseReducer,
   }
 })
 

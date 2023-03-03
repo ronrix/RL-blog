@@ -5,6 +5,7 @@ import { handleLike, handleUnLike } from '../../utility/handeLike';
 import Cookies from 'js-cookie';
 import { useLazyQuery } from '@apollo/client';
 import { LIKE, UNLIKE } from '../../queries';
+import { toggleResponseModal } from '../../state/slice/responseSlice';
 
 type Props = {
     show: Boolean;
@@ -49,7 +50,7 @@ export default function FloatingBlogFooter({ show, blogId, likes }: Props) {
             </div>
             <div>
                 <span className='text-gray-500'>0</span>
-                <i className="ml-3 fa-regular fa-comment text-gray-500 text-xl hover:text-black cursor-pointer"></i>
+                <i onClick={() => dispatch(toggleResponseModal())} className="ml-3 fa-regular fa-comment text-gray-500 text-xl hover:text-black cursor-pointer"></i>
             </div>
         </div>
   );
