@@ -13,7 +13,7 @@ export default function About() {
 
       <div className="border border-b-gray-900 border-t-0 border-r-0 border-l-0">
         <div className="container mx-auto my-14">
-          <h1 className='font-[Labrada] text-5xl lg:text-8xl text-center'>Every idea needs an <span className='font-[labrada] font-bold'>RL.</span></h1>
+          <h1 className='font-[Labrada] text-7xl lg:text-8xl text-center'>Every idea needs an <span className='font-[labrada] font-bold'>RL.</span></h1>
         </div>
       </div>
 
@@ -35,18 +35,20 @@ export default function About() {
     <div className='bg-black p-0 m-0 pb-10'>
       <div className='container mx-auto flex flex-col md:flex-row'>
         <div className='border-2 border-t-0'>
-        <h3 className='text-8xl text-white p-5 font-[Labrada]'>Over 100 million readers and growing.</h3>
+          <h3 className='text-center md:text-left text-5xl md:text-8xl text-white p-5 font-[Labrada]'>Over 100 million readers and growing.</h3>
         </div>
         {/* a carousel, will show testimonies or feedbacks */}
-        <div className="p-5 border border-x-0 border-y-0 border-b-2 border-r-2">
-          <img className='w-[200px] m-0 p-0' src="https://cdn-static-1.medium.com/sites/medium.com/about/images/About_Leon-1.png" alt="avatar of the user feedbacks" />
+        <div className="p-5 border border-x-0 border-y-0 border-b-2 border-r-2 text-center">
+          <img className='w-[200px] mx-auto md:m-0 p-0' src="https://cdn-static-1.medium.com/sites/medium.com/about/images/About_Leon-1.png" alt="avatar of the user feedbacks" />
           <h4 className='m-0 font-[Manrope] text-lg text-white mt-5'>"There’s no other place that combines such an excellent level of writing with a truly engaged and active community. Medium is truly where ideas are born, shared, and spread."</h4>
-          <p className='m-0 font-[labrada] text-lg text-left text-white mt-10'>Jasmine Bina</p>
+          <p className='m-0 font-[labrada] text-lg text-center md:text-left text-white mt-10'>Jasmine Bina</p>
         </div>
       </div>
 
-      <h2 className='mt-20 text-white text-5xl lg:text-8xl text-center m-0 font-[labrada] w-full md:w-[70%] mx-auto'>Create the space for your thinking to take off.</h2>
-      <p className='text-white w-full md:w-[40%] mx-auto text-center mt-7 text-xl font-[Manrope]'>A blank page is also a door. At Medium you can walk through it. It's easy and free to share your thinking on any topic, connect with an audience, express yourself with a range of publishing tools, and even earn money for your work.</p>
+      <div className='p-5'>
+        <h2 className='mt-20 text-white text-5xl lg:text-8xl text-center m-0 font-[labrada] w-full md:w-[70%] mx-auto'>Create the space for your thinking to take off.</h2>
+        <p className='text-white w-full md:w-[40%] mx-auto text-center mt-7 text-xl font-[Manrope]'>A blank page is also a door. At Medium you can walk through it. It's easy and free to share your thinking on any topic, connect with an audience, express yourself with a range of publishing tools, and even earn money for your work.</p>
+      </div>
     </div>
 
     <div className="border border-b-gray-900 border-t-0 border-r-0 border-l-0">
