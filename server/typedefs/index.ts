@@ -24,6 +24,7 @@ export default `#graphql
     title: String!
     description: String!
     thumbnail: String!
+    likes: [String!]
     content: String!
     category: String!
     read_duration: String
@@ -54,6 +55,10 @@ export default `#graphql
     logout: Response
     getAllCategories: [Category]
     readCount(blogId: ID!): Response
+    like(blogId: ID!): Response
+    unlike(blogId: ID!): Response
+    saveToBookmark(blogId: ID!): Response
+    unSaveToBookmark(blogId: ID!): Response
   }
 
   type Mutation {
