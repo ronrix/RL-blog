@@ -243,12 +243,34 @@ export const SAVE_BOOKMARK = gql`
   }
 `;
 
-
 export const UNSAVE_BOOKMARK = gql`
   query($blogId: ID!) {
     unSaveToBookmark(blogId: $blogId) {
       msg
       status
+    }
+  }
+`;
+
+export const SEARCH_QUERY = gql`
+  query($searchQuery: String!) {
+    search(searchQuery: $searchQuery) {
+      id
+      user {
+        id
+        username
+        email
+        avatar
+        followers
+        description
+      }
+      title
+      description
+      thumbnail
+      content
+      category
+      read_duration
+      createdAt 
     }
   }
 `;

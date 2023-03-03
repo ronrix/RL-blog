@@ -1,8 +1,25 @@
+import { useLazyQuery } from '@apollo/client';
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import BlogCard from '../components/BlogCard';
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { SEARCH_QUERY } from '../queries';
+import { searchQuery } from '../state/slice/searchSlice';
 
 export default function Search() {
+  const searchResults = useSelector((state: any) => state.search?.value);
+  const recentSearches = localStorage.getItem("recent_searches");
+
+  const [search] = useLazyQuery(SEARCH_QUERY);
+  const dispatch = useDispatch();
+
+  async function handleReSearch(e: React.MouseEvent<HTMLParagraphElement>) {
+    // query the search input value
+    const {data} = await search({ variables: { searchQuery: (e.target as HTMLParagraphElement).textContent }});
+    dispatch(searchQuery(data.search));
+  }
+
   return (
     <div>
       <Header />
@@ -23,12 +40,25 @@ export default function Search() {
             <input type="text" placeholder='Search RL' className='border-none outline-none w-full ml-3' />
         </div>
 
-        <h2 className="">Recent Searches</h2>
+        <h2>Recent Searches</h2>
 
         {/* searches */}
-        <div className="mt-10">
-          <h3>You have no recent searches</h3>
+        <div className="mt-2 mb-10">
+          {recentSearches ? JSON.parse(recentSearches).map((s: any) => {
+            return <p onClick={handleReSearch} className='font-[Manrope] text-base mb-0 m-0 cursor-pointer p-2 hover:bg-gray-100'>{s}</p>
+          }) : <h3 className='m-0'>You have no recent searches</h3>
+        }
         </div>
+
+        <h3 className='font-bold text-xl'>Results</h3>
+        {searchResults.length ? searchResults.map((result: any) => {
+          return (
+            <div className='shadow-sm'>
+              <BlogCard blog={result} key={result.id} />
+            </div>
+          )
+        }) : <p className='font-[Manrope] text-base mt-3'>No results</p>}
+
       </div>
       <Footer />
     </div>

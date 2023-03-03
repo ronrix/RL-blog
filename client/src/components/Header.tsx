@@ -1,8 +1,11 @@
+import { useLazyQuery } from '@apollo/client';
 import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import useRetrieveUser from '../hooks/useRetrieve';
+import { SEARCH_QUERY } from '../queries';
+import { searchQuery } from '../state/slice/searchSlice';
 import AuthModal from './AuthModal';
 import Avatar from './Avatar';
 import Button from './Button';
@@ -12,7 +15,36 @@ export default function Header() {
   const userData = useSelector((state: any) => state.user?.value);
   const params = useParams();
 
+  const [search] = useLazyQuery(SEARCH_QUERY);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useRetrieveUser();
+
+  async function handleSearchBlog(e: KeyboardEvent) {
+    const inputValue = (e.currentTarget as HTMLInputElement).value;
+
+    if(e.keyCode === 13) {
+        // query the search input value
+        const {data} = await search({ variables: { searchQuery: inputValue }});
+
+        // add the search to the local storage or recent researches
+        const searches  = localStorage.getItem("recent_searches");
+        if(!searches) {
+            localStorage.setItem("recent_searches", JSON.stringify([inputValue])) 
+        }
+        else {
+            JSON.parse(searches).push(inputValue);
+            localStorage.setItem("recent_searches", JSON.stringify(searches));
+        }
+
+        // store the search results to redux state and redirect to the search page
+        if(data.search) {
+            dispatch(searchQuery(data.search));
+            navigate("/search");
+        }
+    }
+  }
 
   return (
     <>
@@ -33,7 +65,7 @@ export default function Header() {
                           </g>
                       </g>
                   </svg>
-                  <input type="text" placeholder='Search RL' className="ml-3 bg-transparent outline-none text-sm placeholder:text-black" />
+                  <input type="text" onKeyDown={handleSearchBlog} placeholder='Search RL' className="ml-3 bg-transparent outline-none text-sm placeholder:text-black" />
               </div> 
           </div>
 

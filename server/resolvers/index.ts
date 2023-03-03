@@ -203,7 +203,22 @@ export default {
           },
         });
       }
+    },
+
+    search: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        const blogs = await Blog.find({ $or: [{ title: { $regex: args.searchQuery, $options: "i" }}, { category: { $regex: args.searchQuery, $options: "i" }} ]}).populate("user");
+        
+        return blogs;
+      } catch (err: any) {
+        return new GraphQLError(err.message, {
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+          },
+        });
+      }
     }
+
   },
   Mutation: {
     addUser: async (parent: any, args: UserType, context: any, info: any) => {
