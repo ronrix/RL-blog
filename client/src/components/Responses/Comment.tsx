@@ -1,7 +1,22 @@
-import React from 'react';
+import { useLazyQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { LIKE } from '../../queries';
+import { handleLike } from '../../utility/handeLike';
 import Reply from './Reply';
+import ReplyForm from './ReplyForm';
 
-export default function Comment() {
+type Props = {
+	blogId: String;
+}
+
+export default function Comment(props: Props) {
+	const { blogId } = props;
+	const [showReplyForm, setShowReplyForm] = useState<boolean>(true);
+
+	const [like] = useLazyQuery(LIKE, { variables: { blogId } });
+	const dispatch = useDispatch();
+
 	return (
 		<div>
 			<div className="mt-5 border border-x-0 border-t-0 pb-5">
@@ -30,6 +45,7 @@ export default function Comment() {
           <div className='flex items-center'>
             <div className="cursor-pointer flex items-center">
               <i
+							  onClick={() => handleLike(dispatch, like)}
                 className={`mr-3 fa-solid fa-hands-clapping text-gray-500 text-xl hover:text-black cursor-pointer`}
               ></i>
               <span className='text-sm'>1</span>
@@ -39,11 +55,13 @@ export default function Comment() {
               <span className='text-sm'>2 replies</span>
             </div>
           </div>
-          <span className='text-sm cursor-pointer hover:text-gray-600'>Reply</span>
+          <span onClick={() => setShowReplyForm(prev => !prev)} className='text-sm cursor-pointer hover:text-gray-600'>Reply</span>
         </div>
 
 			</div>
 
+   		{/* reply form */}
+			{showReplyForm && <ReplyForm /> }
 			{/* replies */}
 			<Reply />
 		</div>

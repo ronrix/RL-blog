@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Reply() {
   return (
-    <div className='ml-5 border border-y-0 border-r-0 border-l-4 border-b-2 mt-5 pb-5 pl-5'>
+    <div className='ml-3 border border-y-0 border-r-0 border-l-8 border-b-2 mt-5 pb-5 pl-5'>
       {/* header */}
       <div className='flex items-start'>
         {/* user avatar */}
