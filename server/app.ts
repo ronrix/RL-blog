@@ -15,6 +15,11 @@ import typeDefs from "./typedefs";
 import resolvers from "./resolvers";
 import { shield, rule, allow } from 'graphql-shield';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { WebSocketServer } from 'ws';
+import { useServer } from 'graphql-ws/lib/use/ws';
+import { PubSub } from 'graphql-subscriptions';
+
+export const pubsub = new PubSub();
 
 import jwt from 'jsonwebtoken';
 
@@ -36,6 +41,19 @@ const main = async () => {
   const httpServer = http.createServer(app);
   const schema = makeExecutableSchema({ typeDefs, resolvers });
 
+  // Creating the WebSocket server
+  const wsServer = new WebSocketServer({
+    // This is the `httpServer` we created in a previous step.
+    server: httpServer,
+    // Pass a different path here if app.use
+    // serves expressMiddleware at a different path
+    path: '/graphql',
+  });
+
+  // Hand in the schema we just created and have the
+  // WebSocketServer start listening.
+  const serverCleanup = useServer({ schema }, wsServer);
+
   const isAuthenticated = rule()(async (parent: any, args: any, ctx: any, info: any) => {
     const valid = await jwt.verify(ctx.token, process.env.SECRET_KEY);
     if(!valid) { 
@@ -55,7 +73,19 @@ const main = async () => {
   const permissionSchema = applyMiddleware(schema, permissions);
   const server = new ApolloServer<MyContext>({
     schema: permissionSchema,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }), 
+      // Proper shutdown for the WebSocket server.
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await serverCleanup.dispose();
+            },
+          };
+        },
+      },
+    ],
   });
   await server.start();
 

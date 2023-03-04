@@ -18,12 +18,24 @@ export default `#graphql
     updatedAt: GraphQLDateTime
   }
 
+  type ReplyType {
+    userId: UserType!
+    reply: String!
+  }
+
+  type CommentType {
+    userId: UserType!
+    comment: String!
+    replies: [ReplyType]
+  }
+
   type BlogType {
     id: ID!
     user: UserType! 
     title: String!
     description: String!
     thumbnail: String!
+    comments: [CommentType]
     likes: [String!]
     content: String!
     category: String!
@@ -76,10 +88,19 @@ export default `#graphql
     createBlog(user: ID!, title: String!, description: String!, thumbnail: String!, content: String!, category: String!, read_duration: String!): BlogType
     follow(id: ID!): Response
     unfollow(id: ID!): Response
+    helloSub(roomId: Int, message: String): String
+
+    addComment(blogId: String!, comment: String): BlogType
+  }
+
+  type SubType {
+    roomId: Int 
+    msg: String
   }
 
   type Subscription {
-    commentAdded(id: ID!, blogId: ID!, comment: String!): Comment
-    commentDelete(id: ID!, blogId: ID!, commentId: ID!): Comment
+    helloSubs(roomId: Int): SubType
+
+    comments(blogId: String!): [CommentType]
   }
 `;

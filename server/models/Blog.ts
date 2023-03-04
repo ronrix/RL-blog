@@ -30,6 +30,18 @@ export const BlogSchema = new mongoose.Schema({
     ref: "User",
     default: []
   },
+  comments: {
+    type: [{
+      userId: mongoose.Schema.Types.ObjectId,
+      comment: String,
+      replies: {
+        userId: mongoose.Schema.Types.ObjectId,
+        reply: String
+      }
+    }],
+    ref: "User",
+    default: []
+  },
   content: String,
   category: String,
   read_duration: String,

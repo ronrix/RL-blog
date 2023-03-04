@@ -5,6 +5,7 @@ import { BlogType, UserType } from "../types";
 import jwt from "jsonwebtoken";
 import Category from "../models/Category";
 import bcrypt from "bcrypt";
+import { pubsub } from "../app";
 
 export default {
   Query: {
@@ -326,6 +327,44 @@ export default {
           }
         })
       }
+    },
+
+    helloSub: async (parent: any, args: any, context: any, info: any) => {
+      pubsub.publish(`helloSubs.${args.roomId}`, { roomId: args.roomId, msg: args.message }); 
+      return "sending message";
+    },
+
+    addComment: async (parent: any, args: any, context: any, info: any) => {
+      try {
+        // const userId = context.req.cookies["c_user"];
+        const userId = "63f7488358148bc2d9e0e989";
+        const blog = await Blog.findOneAndUpdate(args.blogId, { $push: { comments: { userId:  userId, comment: args.comment } } }, { returnDocument: "after" }).exec();
+
+        // don't need a payload since we have a model or DB where we can get the comments on subscription
+        pubsub.publish(`comments.blog-${args.blogId}`, { comments: blog?.comments });
+        return blog;
+      } catch (err: any) {
+        return new GraphQLError("Something went wrong!", {
+          extensions: {
+            code: "INTERNAL_SERVER_ERROR"
+          }
+        });
+      }
     }
-  }
+  },
+
+  // Subscriptions
+  Subscription: {
+    helloSubs: {
+      subscribe: (_: any, args: any) => pubsub.asyncIterator(`helloSubs.${args.roomId}`),
+      resolve: (payload: any) => payload
+    },
+
+    comments: {
+      subscribe: (_: any, args: any) => pubsub.asyncIterator(`comments.blog-${args.blogId}`),
+      resolve: async (payload: any) => payload.comments
+    }
+  },
+  // ...other resolvers...
+
 };
