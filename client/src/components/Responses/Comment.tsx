@@ -1,4 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LIKE } from '../../queries';
@@ -8,11 +9,15 @@ import ReplyForm from './ReplyForm';
 
 type Props = {
 	blogId: String;
+	user: any;
+	comment: String;
+	createdAt: Date;
+	replies: [];
 }
 
 export default function Comment(props: Props) {
-	const { blogId } = props;
-	const [showReplyForm, setShowReplyForm] = useState<boolean>(true);
+	const { blogId, user, comment, replies, createdAt } = props;
+	const [showReplyForm, setShowReplyForm] = useState<boolean>(false);
 
 	const [like] = useLazyQuery(LIKE, { variables: { blogId } });
 	const dispatch = useDispatch();
@@ -25,21 +30,16 @@ export default function Comment(props: Props) {
 					{/* user avatar */}
 					<img
 						className="rounded-full w-[40px] m-0 p-0 mr-2"
-						src={
-							'https://miro.medium.com/fit/c/32/32/1*voAHnaKRTDHRA_xm5FTZwg@2x.jpeg'
-						}
+						src={user.avatar}
 						alt="this is user's avatar"
 					/>
 					<div>
-						<h6 className="font-medium text-sm m-0">Korede</h6>
-						<p className="font-[Manrope] text-xs text-gray-500">almost 3 years ago</p>
+						<h6 className="font-medium text-sm m-0">{user.username}</h6>
+						<p className="font-[Manrope] text-xs text-gray-500">{moment(createdAt).fromNow()}</p>
 					</div>
 				</div>
-				{/* reply */}
-				<p className="font-[Manrope] text-sm">
-					This is one of the best written articles with visuals I’ve seen on
-					SOLID Principles great job.
-				</p>
+				{/* comment */}
+				<p className="font-[Manrope] text-sm">{comment}</p>
 				{/* actiosn (likes, reply)*/}
 				<div className="flex items-center justify-between">
           <div className='flex items-center'>
@@ -63,7 +63,7 @@ export default function Comment(props: Props) {
    		{/* reply form */}
 			{showReplyForm && <ReplyForm /> }
 			{/* replies */}
-			<Reply />
+			{ replies?.length ? <Reply /> : null }
 		</div>
 	);
 }

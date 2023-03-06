@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleResponseModal } from '../../state/slice/responseSlice';
-import { handleCommentInputOnFocus } from '../../utility/handleInputFocus';
-import { authCookie } from "../../state/store";
 import Comment from './Comment';
+import { useSubscription } from '@apollo/client';
+import { COMMENTS_SUBSCRIPTION } from '../../queries';
+import CommentForm from './CommentForm';
 
-export default function Responses() {
+type Props = {
+	blogId: String;
+	comments?: [];
+}
+
+export default function Responses(props: Props) {
+	const { blogId, comments } = props;
+	
+	const [wsComments, setWSComments] = useState<[] | any>(() => comments?.slice());
   const dispatch = useDispatch();
-	const [respond, setRespond] = useState<string>("");
+
+	const {data, loading} = useSubscription(COMMENTS_SUBSCRIPTION, { variables: { blogId }, 
+	onData(options) {
+		setWSComments(options.data.data.comments);
+	},
+	onError(err) {
+		console.log(err)
+	},
+});
 
   function handleShowResponses() {
     dispatch(toggleResponseModal());
@@ -23,26 +40,16 @@ export default function Responses() {
             <i onClick={handleShowResponses} className="fa-solid fa-xmark text-xl text-gray-500 cursor-pointer hover:text-gray-400"></i>
         </div>
 
-				<form action="" className='flex flex-col items-end justify-end'>
-					<div className='relative w-full'>
-						<textarea
-							placeholder="What are your thoughts?"
-							className="shadow-md border w-full p-2 h-[50px] min-h-[50px] max-h-[80px] mt-5 outline-none scrollbar-hide"
-							onFocus={() => handleCommentInputOnFocus(dispatch)}
-							onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setRespond(e.currentTarget.value)}
-						>
-						</textarea>
-						<div className='text-gray-800 text-sm text-right'>{respond.length}/{import.meta.env.VITE_RESPOND_LIMIT}</div>
-					</div>
-					{authCookie && <button className="px-4 py-1 rounded-full border border-green-500 mt-2 mb-5 hover:bg-green-500 hover:text-white duration-75">Respond</button>}
-				</form>
+				<CommentForm blogId={blogId} />	
 
 				<h6 className='font-bold text-sm'>
 					MOST RELEVANT
 					<i className="fa-solid fa-angle-down ml-2"></i>
 				</h6>
 
-        <Comment blogId={"1"} />
+				{wsComments?.length ? wsComments.sort((a: any, b: any) => (new Date(b.createdAt) as any) - (new Date(a.createdAt) as any)).map((comment: any) => {
+					return <Comment createdAt={comment.createdAt} replies={comment.replies} user={comment.userId} comment={comment.comment} blogId={blogId} />
+				}) : <p className='font-[Manrope] text-base mt-3'>No comments!</p>}
 			</div>
 		</div>
 	);

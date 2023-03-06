@@ -34,9 +34,14 @@ export const BlogSchema = new mongoose.Schema({
     type: [{
       userId: mongoose.Schema.Types.ObjectId,
       comment: String,
+      createdAt: { type: Date, default: Date.now },
+      updatedAt: { type: Date },
       replies: {
-        userId: mongoose.Schema.Types.ObjectId,
-        reply: String
+        type: [{
+          userId: mongoose.Schema.Types.ObjectId,
+          reply: String,
+        }],
+        default: []
       }
     }],
     ref: "User",

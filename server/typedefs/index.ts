@@ -19,13 +19,19 @@ export default `#graphql
   }
 
   type ReplyType {
+    id: ID!
     userId: UserType!
     reply: String!
+    createdAt: GraphQLDateTime
+    updatedAt: GraphQLDateTime
   }
 
   type CommentType {
+    id: ID!
     userId: UserType!
     comment: String!
+    createdAt: GraphQLDateTime
+    updatedAt: GraphQLDateTime
     replies: [ReplyType]
   }
 
@@ -90,7 +96,7 @@ export default `#graphql
     unfollow(id: ID!): Response
     helloSub(roomId: Int, message: String): String
 
-    addComment(blogId: String!, comment: String): BlogType
+    addComment(blogId: ID!, comment: String): Response
   }
 
   type SubType {
@@ -101,6 +107,6 @@ export default `#graphql
   type Subscription {
     helloSubs(roomId: Int): SubType
 
-    comments(blogId: String!): [CommentType]
+    comments(blogId: ID!): [CommentType]
   }
 `;

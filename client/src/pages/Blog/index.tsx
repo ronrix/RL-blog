@@ -30,7 +30,7 @@ export default function BlogPage() {
   return (
     <div>
         <Header />
-        { responseShow && <Responses /> }
+        { responseShow && <Responses blogId={data.getBlog.id} comments={data.getBlog.comments} /> }
 
         <div className="container mx-auto flex">
           <Blog data={data} loading={loading} />

@@ -131,6 +131,27 @@ export const GET_BLOG = gql`
       description
       thumbnail
       likes
+      comments {
+        id
+        comment
+        createdAt
+        updatedAt 
+        userId {
+          id 
+          username
+          avatar
+        }
+        replies {
+          reply
+          createdAt
+          updatedAt 
+          userId {
+            id 
+            username
+            avatar
+          }
+        }
+      }
       content
       category
       read_duration
@@ -271,6 +292,42 @@ export const SEARCH_QUERY = gql`
       category
       read_duration
       createdAt 
+    }
+  }
+`;
+
+export const ADD_COMMENT = gql`
+  mutation($blogId: ID!, $comment: String!) {
+    addComment(blogId: $blogId, comment: $comment) {
+      msg
+      status
+    }
+  }
+`;
+
+export const COMMENTS_SUBSCRIPTION = gql`
+  subscription Subscription($blogId: ID!) {
+    comments(blogId: $blogId) {
+      id
+      userId {
+        id
+        username
+        avatar
+      }
+      createdAt
+      updatedAt
+      comment 
+      replies {
+        id
+        userId {
+          id 
+          username
+          avatar
+        }
+        createdAt
+        updatedAt
+        reply
+      }
     }
   }
 `;
