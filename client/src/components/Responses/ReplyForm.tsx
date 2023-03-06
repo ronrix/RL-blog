@@ -16,6 +16,7 @@ export default function ReplyForm() {
 							className="shadow-md border w-full p-2 h-[50px] min-h-[50px] max-h-[80px] mt-5 outline-none scrollbar-hide"
 							onFocus={() => handleCommentInputOnFocus(dispatch)}
 							onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReply(e.currentTarget.value)}
+							maxLength={import.meta.env.VITE_RESPOND_LIMIT}
 						>
 						</textarea>
 						<div className='text-gray-800 text-sm text-right'>{reply.length}/{import.meta.env.VITE_RESPOND_LIMIT}</div>
