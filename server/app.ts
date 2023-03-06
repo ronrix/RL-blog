@@ -47,12 +47,12 @@ const main = async () => {
     server: httpServer,
     // Pass a different path here if app.use
     // serves expressMiddleware at a different path
-    path: '/graphql',
+    path: '/subscriptions',
   });
 
   // Hand in the schema we just created and have the
   // WebSocketServer start listening.
-  const serverCleanup = useServer({ schema }, wsServer);
+  const serverCleanup = useServer({ schema },wsServer);
 
   const isAuthenticated = rule()(async (parent: any, args: any, ctx: any, info: any) => {
     const valid = await jwt.verify(ctx.token, process.env.SECRET_KEY);
