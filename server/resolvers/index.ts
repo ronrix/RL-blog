@@ -95,10 +95,10 @@ export default {
     },
     getBlog: async (parent: any, args: any, context: any, info: any) => {
       try {
-        const blog = await Blog.findOne({ _id: args.id, title: args.title }).populate("user");
+        const blog = await Blog.findOne({ _id: args.id, title: args.title }).populate("user").populate({ path: "comments.userId", model: "User" });
         return blog;
-      } catch(err) {
-        return new GraphQLError('Something went wrong!', {
+      } catch(err: any) {
+        return new GraphQLError(err.message, {
           extensions: {
             code: 'INTERNAL_SERVER_ERROR',
           },
@@ -336,13 +336,12 @@ export default {
 
     addComment: async (parent: any, args: any, context: any, info: any) => {
       try {
-        // const userId = context.req.cookies["c_user"];
-        const userId = "63f7488358148bc2d9e0e989";
-        const blog = await Blog.findOneAndUpdate(args.blogId, { $push: { comments: { userId:  userId, comment: args.comment } } }, { returnDocument: "after" }).exec();
+        const userId = context.req.cookies["c_user"];
+        const blog = await Blog.findOneAndUpdate(args.blogId, { $push: { comments: { userId:  userId, comment: args.comment } } }, { returnDocument: "after" }).populate({ path: "comments.userId", model: "User"}).exec();
 
         // don't need a payload since we have a model or DB where we can get the comments on subscription
         pubsub.publish(`comments.blog-${args.blogId}`, { comments: blog?.comments });
-        return blog;
+        return { msg: "success", status: 201 };
       } catch (err: any) {
         return new GraphQLError("Something went wrong!", {
           extensions: {
